@@ -12,7 +12,7 @@ cancervariable.vesseldensity = 0.08; % gives the density of the vessels in the c
 %this means the vessel density indirectly gives the number of cells
 %containing vessels which will be randomly distributed in the grid.
 % note tumour diameter must be less than matrixrow/col number
-cancervariable.initialtumourdiameter = 9; % number of tumor cells that make up the diameter of the disk of tumor cells that initially starts in the center of the grid (
+cancervariable.initialtumourdiameter = 5; % number of tumor cells that make up the diameter of the disk of tumor cells that initially starts in the center of the grid (
 cancervariable.initialpH = 7.4; %Initial pH value that is uniform across the grid (i.e. every cell begins with a pH value of initialpH)
 cancervariable.initialglucoseconcentration = 1; % Initial value of glucose concentration that is uniform across the grid.
 cancervariable.statematrix = 3*ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the state of each grid element (i.e. is it  a micro-vessel = 1, empty = 2, normal cell = 3, activetumor cell = 4, quiescenttumor cell = 5). Notice that we're populating the matrix with normal cells
@@ -47,7 +47,6 @@ cancervariable.statematrix = initStateMatrix(cancervariable);
 figure;
 imagesc(cancervariable.statematrix);
 title('cell state matrix');
-%%%%%%%%%%WHAT ARE THE GHOST VALUES?%%%%%%%%%%%%%%%%%%%%%%%%
 
 %findGlucoseMatrix
 cancervariable.glucosematrix = findGlucoseMatrix(cancervariable);
@@ -55,6 +54,8 @@ cancervariable.pHmatrix = findPHMatrix(cancervariable);
 
 plotGlucoseMatrix(cancervariable);
 plotPHMatrix(cancervariable);
+
+%r = radiusOfGyration(cancervariable);
 
 
 end

@@ -29,24 +29,30 @@ for lcv_vesselposition = 1 : cancervariable.numberofvessels
 end
 
 %%%%% Now we need to add the disk of tumor cells with diameter given by cancervariable.initialtumourdiameter to the center of the grid
-%cancervariable.statematrix(round(cancervariable.matrixrownumber/2),round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
-%cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
-%cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
-%cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=4;
-%cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2),round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=4;
 
-[rr cc] = meshgrid(1:cancervariable.matrixrownumber,1:cancervariable.matrixcolnumber);
-C = sqrt((rr-round(cancervariable.matrixrownumber/2)).^2+(cc-round(cancervariable.matrixcolnumber/2)).^2)<=floor(cancervariable.initialtumourdiameter/2);
+%cancervariable.statematrix(50,50) = 4;
+%cancervariable.statematrix(50,51) = 4;
+%cancervariable.statematrix(51,50) = 4;
+%cancervariable.statematrix(51,51) = 4;
 
-for i=1:cancervariable.matrixrownumber
-    for j=1:cancervariable.matrixcolnumber
-        if (C(i,j) == 1)
-            cancervariable.statematrix(i,j) = 4;
-        end
-    end
-end
+%[rr cc] = meshgrid(1:cancervariable.matrixrownumber,1:cancervariable.matrixcolnumber);
+%C = sqrt((rr-round(cancervariable.matrixrownumber/2)).^2+(cc-round(cancervariable.matrixcolnumber/2)).^2)<=floor(cancervariable.initialtumourdiameter/2);
+
+%for i=1:cancervariable.matrixrownumber
+%    for j=1:cancervariable.matrixcolnumber
+%        if (C(i,j) == 1)
+%            cancervariable.statematrix(i,j) = 4;
+%        end
+%    end
+%end
 
 statematrix = cancervariable.statematrix;
+
 
 end
 

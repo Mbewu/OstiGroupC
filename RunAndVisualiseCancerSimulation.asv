@@ -5,14 +5,14 @@ function [ ] = RunAndVisualiseCancerSimulation()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section 1: Defining the variables for the problem
 
-cancervariable.matrixrownumber = 10; % number of rows for the cellular automaton grid
-cancervariable.matrixcolnumber = 10; % number of columns for the cellular automaton grid
+cancervariable.matrixrownumber = 100; % number of rows for the cellular automaton grid
+cancervariable.matrixcolnumber = 100; % number of columns for the cellular automaton grid
 cancervariable.vesseldensity = 0.08; % gives the density of the vessels in the cellular automaton grid
 % vessel density = (number of grid elements containing vessels)/(number of grid elements which is the rownumber*colnumber)
 %this means the vessel density indirectly gives the number of cells
 %containing vessels which will be randomly distributed in the grid.
 % note tumour diameter must be less than matrixrow/col number
-cancervariable.initialtumourdiameter = 5; % number of tumor cells that make up the diameter of the disk of tumor cells that initially starts in the center of the grid
+cancervariable.initialtumourdiameter = 9; % number of tumor cells that make up the diameter of the disk of tumor cells that initially starts in the center of the grid (
 cancervariable.initialpH = 7.4; %Initial pH value that is uniform across the grid (i.e. every cell begins with a pH value of initialpH)
 cancervariable.initialglucoseconcentration = 1; % Initial value of glucose concentration that is uniform across the grid.
 cancervariable.statematrix = 3*ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the state of each grid element (i.e. is it  a micro-vessel = 1, empty = 2, normal cell = 3, activetumor cell = 4, quiescenttumor cell = 5). Notice that we're populating the matrix with normal cells
@@ -20,11 +20,11 @@ cancervariable.pHmatrix = cancervariable.initialpH*ones(cancervariable.matrixrow
 cancervariable.glucosematrix = cancervariable.initialglucoseconcentration*ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the value of the glucose concentration of the corresponding grid element
 cancervariable.ghostvaluematrix = ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the "ghost values" for the grid element (only valid for grid elements that contain vessels).
 
-cancervariable.spacestep = 1;%0.002; %(centimetres)
-cancervariable.D_G =1;% 9.1e-5; %(centimetres^2 / s)
+cancervariable.spacestep = 0.002; %(centimetres)
+cancervariable.D_G = 9.1e-5; %(centimetres^2 / s)
 cancervariable.kr = zeros(5,1);
 cancervariable.kr(2) = 0; % empty k
-cancervariable.kr(3) =1;% 1e-4; % normal k
+cancervariable.kr(3) = 1e-4; % normal k
 cancervariable.kr(4)= 1e-3; % activetumor k (1/s)
 cancervariable.kr(5)= 1e-3; % quiescenttumor k (1/s)
 cancervariable.q_G = 3.0e-5; %(centimetres / s)
@@ -44,15 +44,18 @@ cancervariable.statematrix = initStateMatrix(cancervariable);
 
 
 %Show the state matrix
+figure;
 imagesc(cancervariable.statematrix);
-%%%%%%%%%%WHAT ARE THE GHOST VALUES?%%%%%%%%%%%%%%%%%%%%%%%%
+title('cell state matrix');
 
 %findGlucoseMatrix
 cancervariable.glucosematrix = findGlucoseMatrix(cancervariable);
-%cancervariable.pHmatrix = findPHMatrix(cancervariable);
+cancervariable.pHmatrix = findPHMatrix(cancervariable);
 
 plotGlucoseMatrix(cancervariable);
-%plotPHMatrix(cancervariable);
+plotPHMatrix(cancervariable);
+
+r = radiusOfGyration(cancervariable);
 
 
 end
