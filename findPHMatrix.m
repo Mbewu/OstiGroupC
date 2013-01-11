@@ -1,22 +1,22 @@
-function [ G ] = findGlucoseMatrix( cancervariable )
+function [ H ] = findPHMatrix( cancervariable )
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
 
 
 Delta = cancervariable.spacestep; %(centimetres)
-D_G = cancervariable.D_G; %(centimetres^2 / s)
-kr = cancervariable.kr;
-q_G = cancervariable.q_G; %(centimetres / s)
-G_S = cancervariable.G_S; % (mM)
+D_H = cancervariable.D_H; %(centimetres^2 / s)
+hr = cancervariable.hr;
+q_H = cancervariable.q_H; %(centimetres / s)
+H_S = cancervariable.H_S; % (mM)
 
 N = cancervariable.matrixrownumber;
 M = cancervariable.matrixcolnumber;
 
 noVessels = sum(sum(cancervariable.statematrix==1));
 
-G = ones(N,M);
-Gvec = zeros(N*M-noVessels,1);
+H = ones(N,M);
+Hvec = zeros(N*M-noVessels,1);
 
 systemMatrix = zeros(N*M-noVessels,N*M-noVessels);
 rhs = zeros(N*M-noVessels,1);
@@ -38,70 +38,68 @@ for i=1:N
     end
 end
 
+
 Delta2 = Delta*Delta; %delta squared to be reused
 for i = 1:N
     for j = 1:M
-        k = m2v(i,j); %row to be filled in
+        k = m2v(coord(i,N),coord(j,M)); %row to be filled in
         % vessel above, to the right, below and to the left
         if(m2v(i,j) == 0)
           %do nothing except give boundary value
-          G(i,j) = G_S;
+          H(i,j) = H_S;
         elseif(m2v(coord(i-1,N),coord(j,M)) == 0)
-            kij = kr(cancervariable.statematrix(i,j));
+            hij = hr(cancervariable.statematrix(i,j));
             systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) + 1;
-            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - (kij*Delta2+q_G*Delta)/D_G;
+            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - q_H*Delta/D_H;
         
-            rhs(k) = - q_G*Delta*G_S/D_G;
+            rhs(k) = - (q_H*Delta*H_S + hij*Delta2)/D_H;
         elseif(m2v(coord(i,N),coord(j+1,M)) == 0)
-            kij = kr(cancervariable.statematrix(i,j));
+            hij = hr(cancervariable.statematrix(i,j));
             systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) + 1;
-            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - (kij*Delta2+q_G*Delta)/D_G;
+            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - q_H*Delta/D_H;
         
             
-            rhs(k) = - q_G*Delta*G_S/D_G;
+            rhs(k) = - (q_H*Delta*H_S + hij*Delta2)/D_H;
         elseif(m2v(coord(i+1,N),coord(j,M)) == 0)
-            kij = kr(cancervariable.statematrix(i,j));
+            hij = hr(cancervariable.statematrix(i,j));
             systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) + 1;
-            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - (kij*Delta2+q_G*Delta)/D_G;
+            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - q_H*Delta/D_H;
         
-            rhs(k) = - q_G*Delta*G_S/D_G;
+            rhs(k) = - (q_H*Delta*H_S + hij*Delta2)/D_H;
         elseif(m2v(coord(i,N),coord(j-1,M)) == 0)
-            kij = kr(cancervariable.statematrix(i,j));
+            hij = hr(cancervariable.statematrix(i,j));
             systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) + 1;
-            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - (kij*Delta2+q_G*Delta)/D_G;
+            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 3 - q_H*Delta/D_H;
         
-            rhs(k) = - q_G*Delta*G_S/D_G;
+            rhs(k) = - (q_H*Delta*H_S + hij*Delta2)/D_H;
         else
-            kij = kr(cancervariable.statematrix(i,j));        
+            hij = hr(cancervariable.statematrix(i,j));        
             systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i+1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) = systemMatrix(k,m2v(coord(i-1,N),coord(j,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j+1,M))) + 1;
             systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) = systemMatrix(k,m2v(coord(i,N),coord(j-1,M))) + 1;
-            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 4 - kij*Delta2/D_G;
+            systemMatrix(k,m2v(coord(i,N),coord(j,M))) = systemMatrix(k,m2v(coord(i,N),coord(j,M))) - 4 - hij*Delta2/D_H;
         
-            rhs(k) = 0;
+            rhs(k) =  - hij*Delta2/D_H;
         end
     end
 end
 
-spy(systemMatrix)
+systemMatrix = sparse(systemMatrix);
+Hvec = systemMatrix\rhs;
 
-systemMatrix= sparse(systemMatrix);
-Gvec = systemMatrix\rhs;
-
-
-for k = 1:length(Gvec)
+for k = 1:length(Hvec)
     i = v2m(k,1);
     j = v2m(k,2);
-    G(i,j) = Gvec(k);
+    H(i,j) = Hvec(k);
 end
 
 

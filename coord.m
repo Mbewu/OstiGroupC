@@ -1,8 +1,7 @@
-function [ ID] = rowColID( rowColNumber)
+function [ ID] = coord( rowColNumber, N)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
-N = 100;
 %periodic boundaries
 if(rowColNumber == -1)
     ID = N-1;
