@@ -92,10 +92,6 @@ for i = 1:N
     end
 end
 
-figure;
-spy(systemMatrix)
-title('sparsity pattern');
-
 systemMatrix= sparse(systemMatrix);
 Gvec = systemMatrix\rhs;
 
