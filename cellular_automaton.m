@@ -37,7 +37,13 @@ for k = 1:cancervariable.noofogenerations
     generation = cancervariable.currentgeneration
     solvingTime
     automatonTime
-    %if(rem(cancervariable.currentgeneration,10) == 1)
+    cancervariable.radiusOfGyration(k) = radiusOfGyration(cancervariable);
+    if(rem(cancervariable.currentgeneration,10) == 1)
         visualise(cancervariable);
-    %end
+        figure;
+        plot(cancervariable.radiusOfGyration(1:cancervariable.currentgeneration));
+        title(['radius of gyration (HA = ' num2str(cancervariable.hr(4))  ') until generation ' num2str(cancervariable.currentgeneration)])
+        
+    end
 end
+

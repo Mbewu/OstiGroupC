@@ -703,23 +703,19 @@ n = subgenno;
                         if death_matrix(1,1) == 2 ...
                             || death_matrix(2, M) == 2 ...
                             || death_matrix(N,M) == 2 ...
-                            || death_matrix(1,M-1) == 2 ...
-                            || death_matrix(1,1) == 7 ...
-                            || death_matrix(2, M) == 7 ...
-                            || death_matrix(N,M) == 7 ...
-                            || death_matrix(1,M-1) == 7
+                            || death_matrix(1,M-1) == 2
         
                             glucose = zeros(4,1);
-                            if(cancervariable.statematrix(1,1) == 2 || cancervariable.statematrix(1,1) == 7)
+                            if(cancervariable.statematrix(1,1) == 2)
                                 glucose(1) = cancervariable.glucosematrix(1,1);
                             end
-                            if(cancervariable.statematrix(2, M) == 2 || cancervariable.statematrix(2, M) == 7)
+                            if(cancervariable.statematrix(2, M) == 2)
                                 glucose(2) = cancervariable.glucosematrix(2, M);
                             end
-                            if(cancervariable.statematrix(N,M) == 2 || cancervariable.statematrix(N,M) == 7)
+                            if(cancervariable.statematrix(N,M) == 2)
                                 glucose(3) = cancervariable.glucosematrix(N,M);
                             end
-                            if(cancervariable.statematrix(1,M-1) == 2 || cancervariable.statematrix(1,M-1) == 7)
+                            if(cancervariable.statematrix(1,M-1) == 2)
                                 glucose(4) = cancervariable.glucosematrix(1,M-1);
                             end
                                 
@@ -741,23 +737,19 @@ n = subgenno;
                         if death_matrix(N,2) == 2 ...
                             || death_matrix(1,1) == 2 ...
                             || death_matrix(N-1,1) == 2 ...
-                            || death_matrix(N,M) == 2 ...
-                            || death_matrix(N,2) == 7 ...
-                            || death_matrix(1,1) == 7 ...
-                            || death_matrix(N-1,1) == 7 ...
-                            || death_matrix(N,M) == 7
+                            || death_matrix(N,M) == 2
         
                             glucose = zeros(4,1);
-                            if(cancervariable.statematrix(N,2) == 2 || cancervariable.statematrix(N,2) == 7)
+                            if(cancervariable.statematrix(N,2) == 2)
                                 glucose(1) = cancervariable.glucosematrix(N,2);
                             end
-                            if(cancervariable.statematrix(1,1) == 2 || cancervariable.statematrix(1,1) == 7)
+                            if(cancervariable.statematrix(1,1) == 2)
                                 glucose(2) = cancervariable.glucosematrix(1,1);
                             end
-                            if(cancervariable.statematrix(N-1,1) == 2 || cancervariable.statematrix(N-1,1) == 7)
+                            if(cancervariable.statematrix(N-1,1) == 2)
                                 glucose(3) = cancervariable.glucosematrix(N-1,1);
                             end
-                            if(cancervariable.statematrix(N,M) == 2 || cancervariable.statematrix(N,M) == 7)
+                            if(cancervariable.statematrix(N,M) == 2)
                                 glucose(4) = cancervariable.glucosematrix(N,M);
                             end
                                 
@@ -778,23 +770,19 @@ n = subgenno;
                         if death_matrix(N,1) == 2 ...
                             || death_matrix(1,M) == 2 ...
                             || death_matrix(N-1,M) == 2 ...
-                            || death_matrix(N,M-1) == 2 ...
-                            || death_matrix(N,1) == 7 ...
-                            || death_matrix(1,M) == 7 ...
-                            || death_matrix(N-1,M) == 7 ...
-                            || death_matrix(N,M-1) == 7
+                            || death_matrix(N,M-1) == 2
         
                             glucose = zeros(4,1);
-                            if(cancervariable.statematrix(N,1) == 2 || cancervariable.statematrix(N,1) == 7)
+                            if(cancervariable.statematrix(N,1) == 2)
                                 glucose(1) = cancervariable.glucosematrix(N,1);
                             end
-                            if(cancervariable.statematrix(1,M) == 2 || cancervariable.statematrix(1,M) == 7)
+                            if(cancervariable.statematrix(1,M) == 2)
                                 glucose(2) = cancervariable.glucosematrix(1,M);
                             end
-                            if(cancervariable.statematrix(N-1,M) == 2 || cancervariable.statematrix(N-1,M) == 7)
+                            if(cancervariable.statematrix(N-1,M) == 2)
                                 glucose(3) = cancervariable.glucosematrix(N-1,M);
                             end
-                            if(cancervariable.statematrix(N,M-1) == 2 || cancervariable.statematrix(N,M-1) == 7)
+                            if(cancervariable.statematrix(N,M-1) == 2)
                                 glucose(4) = cancervariable.glucosematrix(N,M-1);
                             end
                                 
