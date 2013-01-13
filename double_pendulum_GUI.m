@@ -128,22 +128,29 @@ function run_button_Callback(hObject, eventdata, handles)
 %
 
 
-    N                = str2num(get(handles.gridSizeN, 'string'))
-    phiV              = str2num(get(handles.dtphi1_edit, 'string'))
-    Gs                = str2num(get(handles.phi2_edit, 'string'))
-    Hs              = str2num(get(handles.dtphi2_edit, 'string'))
-    GdN                  = str2num(get(handles.g_edit, 'string'))
-    GdT                 = str2num(get(handles.m1_edit, 'string'))
-    HdN                 = str2num(get(handles.m2_edit, 'string')) 
-    HdT                 = str2num(get(handles.l1_edit, 'string'))
-    HqN                 = str2num(get(handles.l2_edit, 'string'))
-    HqT                 = str2num(get(handles.duration_edit, 'string'))
-    fInv                 = str2num(get(handles.fps_edit, 'string'))
-    kN                  = str2num(get(handles.edit15, 'string'))
-    kT                  = str2num(get(handles.edit16, 'string'))
-    HTA                 = str2num(get(handles.edit17, 'string'))
-    HTQ                 = str2num(get(handles.edit20, 'string'))
-    delta               = str2num(get(handles.edit19, 'string'))
+    numrows = str2num(get(handles.gridSizeN, 'string'));
+    numcols = str2num(get(handles.edit22, 'string'));
+    vesseldensity = str2num(get(handles.dtphi1_edit, 'string'));
+    tumordisk = str2num(get(handles.edit23, 'string'));
+    Gs = str2num(get(handles.phi2_edit, 'string'));
+    Hs = str2num(get(handles.edit29, 'string'));
+    GdN = str2num(get(handles.g_edit, 'string'));
+    GdT = str2num(get(handles.m1_edit, 'string'));
+    HdN = str2num(get(handles.m2_edit, 'string'));
+    HdT = str2num(get(handles.l1_edit, 'string'));
+    HqN = str2num(get(handles.l2_edit, 'string'));
+    HqT = str2num(get(handles.duration_edit, 'string'));
+    numofgen = str2num(get(handles.edit24, 'string'));
+    fInv = str2num(get(handles.fps_edit, 'string'));
+    kN = str2num(get(handles.edit15, 'string'));
+    kT = str2num(get(handles.edit16, 'string'));
+    HTA = str2num(get(handles.edit17, 'string'));
+    HTQ = str2num(get(handles.edit20, 'string'));
+    delta = str2num(get(handles.edit19, 'string'));
+    diffG = str2num(get(handles.edit25, 'string'));
+    diffH = str2num(get(handles.edit26, 'string'));
+    permG = str2num(get(handles.edit27, 'string'));
+    permH = str2num(get(handles.edit28, 'string'));
 
     axes(handles.stateMatrixAxes);
     plot(-5:0.1:5);
