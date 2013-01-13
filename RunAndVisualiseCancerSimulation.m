@@ -28,13 +28,13 @@ cancervariable.kr(3) = 1e-4; % normal k
 cancervariable.kr(4)= 1e-3; % activetumor k (1/s)
 cancervariable.kr(5)= 1e-3; % quiescenttumor k (1/s)
 cancervariable.kr(6)= 1e-4; % quiescentnormal k (1/s)
-cancervariable.q_G = 3.0e-5; %(centimetres / s)
+cancervariable.q_G = 6.0e-5; %(centimetres / s)
 cancervariable.G_S = 5.0; % (mM)
 cancervariable.D_H = 1.08e-5; %(centimetres^2 / s)
 cancervariable.hr = zeros(6,1);
 cancervariable.hr(2) = 0; % empty k
 cancervariable.hr(3) = 0; % normal k
-cancervariable.hr(4)= 8.0e-5; % activetumor k (1/s)
+cancervariable.hr(4)= 5.0e-5; % activetumor k (1/s)
 cancervariable.hr(5) = 5e-7; % quiescenttumor
 cancervariable.hr(6) = 0; % quiescentnormal
 cancervariable.q_H = 1.19e-4; %(centimetres / s)
@@ -51,7 +51,7 @@ cancervariable.pHdT = 6.0; % 6.0
 cancervariable.pHqN = 7.1; % 7.1
 cancervariable.pHqT = 6.4; % 6.4
 
-cancervariable.f = 0.5;
+cancervariable.f = 0.1;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section 2: Setting up and visualise the initial state matrix

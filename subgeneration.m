@@ -1,40 +1,20 @@
-function [state_matrix] = cellular_automaton(cancervariable)
+function [ state_matrix ] = subgeneration( cancervariable,subgenno , death_matrix, state_matrix , vector_random)
+%UNTITLED Summary of this function goes here
+%   Detailed explanation goes here
 
 N = cancervariable.matrixrownumber;
 M = cancervariable.matrixcolnumber;
-state_matrix = cancervariable.statematrix;
 f = cancervariable.f;
 
-%cancervariable.noofogenerations
-%cancervariable.GdN
-%cancervariable.GdT
-%cancervariable.pHdN
-%cancervariable.pHdT
-%cancervariable.pHqN
-%cancervariable.pHqT
+n = subgenno;
 
-%RANDOMLY PICK 1/f OF CELLS TO UPDATE FOR SUB-GENERATION
 
-for k = 1:cancervariable.noofogenerations
-    
-    cancervariable.currentgeneration = k;
-    
-
-    vector_random = randperm(N*M);
-    
-    %SUBGENERATIONS
-    for n = 1:ceil(1/f)
-        death_matrix = state_matrix;
-        %%%%%%%ENTER GLUCOSE FUNCTION%%%%%%%%%%%
-        cancervariable.glucosematrix = findGlucoseMatrix(cancervariable);
-        %%%%%%%ENTER LACTIC ACID FUNCTION%%%%%%%%%%%
-        cancervariable.pHmatrix = findPHMatrix(cancervariable);
-        
         for i = 1:((N*M)/ceil(1/f))
-            for j = 1:ceil(1/f)
-                
-                if ((i-1)*ceil(1/f) + j) <= N*M
-                  cell_position = vector_random((i-1)*ceil(1/f) + j);
+            
+                if (n-1)*((N*M)/ceil(1/f)) + i > N*M
+                    break
+                else
+                  cell_position = vector_random((n-1)*((N*M)/ceil(1/f)) + i);
        
                 %SELECT NORMAL
         
@@ -46,13 +26,16 @@ for k = 1:cancervariable.noofogenerations
     
                              state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 2;
 
-                        elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHdN 
+                        elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHdN 
     
                             state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 2;
                             
-                        elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHqN 
+                        elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHqN 
                             
                             state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 6;
+                        elseif (cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHqN)
+    
+                            state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 3;
                         end
                     end
                             
@@ -60,7 +43,7 @@ for k = 1:cancervariable.noofogenerations
                         %HIGH pH ALLOWS CELLS TO DIVIDE - CELL DIVIDES INTO FREE SPACE WITH HIGHEST
                         %GLUCOSE CONCENTRATION IF AVAILABLE
                     if state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) == 3 ...
-                            && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHqN
+                            && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHqN
                         
                         %CENTRAL GRID DIVIDING
                     if ceil(cell_position/N) ~= 1 && ceil(cell_position/N) ~= M && rem(cell_position-1,N)+1 ~= 1 && rem(cell_position-1,N)+1 ~= N 
@@ -84,7 +67,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,ceil(cell_position/N)+1);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                                         
                             %maybe a(1)
                             if a == 1
@@ -122,7 +105,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(N,ceil(cell_position/N));
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                         
                             if a == 1
@@ -157,7 +140,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,1);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(rem(cell_position-1,N)+1-1,M) = 3;
@@ -191,7 +174,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(1,ceil(cell_position/N));
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(N,ceil(cell_position/N)-1) = 3;
@@ -225,7 +208,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,2);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(rem(cell_position-1,N)+1-1,1) = 3;
@@ -261,7 +244,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(1,M);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                                 if a == 1
                                     state_matrix(1,2) = 3;
@@ -295,7 +278,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(1,M-1);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(1,1) = 3;
@@ -329,7 +312,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(N,M);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(N,2) = 3;
@@ -362,7 +345,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(N,M-1);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(N,1) = 3;
@@ -378,10 +361,6 @@ for k = 1:cancervariable.noofogenerations
                             
                     end
                     
-                    if (state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) == 6 && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHqN)
-    
-                        state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 3;
-                    end
                     
                     %SELECT TUMOR ACTIVE
         
@@ -393,19 +372,22 @@ for k = 1:cancervariable.noofogenerations
     
                         state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 2;
 
-                    elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHdT 
+                    elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHdT 
     
                         state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 2;
                                         
-                    elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHdT && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHqT
+                    elseif cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHqT
     
                         state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 5;
+                    elseif (cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHqT)
+    
+                        state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 4;
                     end
                 end
                 
                 
                 
-                if state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) == 4 && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHqT
+                if state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) == 4 && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) > cancervariable.pHqT
                         %CENTRAL GRID DIVIDING
                     if ceil(cell_position/N) ~= 1 && ceil(cell_position/N) ~= M && rem(cell_position-1,N)+1 ~= 1 && rem(cell_position-1,N)+1 ~= N 
        
@@ -428,7 +410,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,ceil(cell_position/N)+1);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                       
                             if a == 1
                                 state_matrix(rem(cell_position-1,N)+1-1,ceil(cell_position/N)) = 4;
@@ -466,7 +448,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(N,ceil(cell_position/N));
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                 
                             if a == 1
                                 state_matrix(1,ceil(cell_position/N)-1) = 4;
@@ -500,7 +482,7 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,1);
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                    
                             if a == 1
                                 state_matrix(rem(cell_position-1,N)+1-1,M) = 4;
@@ -534,11 +516,8 @@ for k = 1:cancervariable.noofogenerations
                                 glucose(4) = cancervariable.glucosematrix(1,ceil(cell_position/N));
                             end
                                 
-                            a = find(max(glucose) == glucose)
+                            a = find(max(glucose) == glucose);
                                 
-                            a = find(max([cancervariable.glucosematrix(N,ceil(cell_position/N)-1),cancervariable.glucosematrix(N,ceil(cell_position/N)+1),cancervariable.glucosematrix(N-1,ceil(cell_position/N)),cancervariable.glucosematrix(1,ceil(cell_position/N))]) ...
-                            == [cancervariable.glucosematrix(N,ceil(cell_position/N)-1),cancervariable.glucosematrix(N,ceil(cell_position/N)+1),cancervariable.glucosematrix(N-1,ceil(cell_position/N)),cancervariable.glucosematrix(1,ceil(cell_position/N))]);
-            
                             if a == 1
                                 state_matrix(N,ceil(cell_position/N)-1) = 4;
                             elseif a == 2
@@ -557,9 +536,22 @@ for k = 1:cancervariable.noofogenerations
                             || death_matrix(rem(cell_position-1,N)+1+1,1) == 2 ...
                             || death_matrix(rem(cell_position-1,N)+1,2) == 2
         
-                            a = find(max([cancervariable.glucosematrix(rem(cell_position-1,N)+1-1 , 1),cancervariable.glucosematrix(rem(cell_position-1,N)+1,M),cancervariable.glucosematrix(rem(cell_position-1,N)+1+1,1),cancervariable.glucosematrix(rem(cell_position-1,N)+1,2)]) ...
-                            == [cancervariable.glucosematrix(rem(cell_position-1,N)+1-1 , 1),cancervariable.glucosematrix(rem(cell_position-1,N)+1,M),cancervariable.glucosematrix(rem(cell_position-1,N)+1+1,1),cancervariable.glucosematrix(rem(cell_position-1,N)+1,2)]);
-            
+                            glucose = zeros(4,1);
+                            if(cancervariable.statematrix(rem(cell_position-1,N)+1-1,1) == 2)
+                                glucose(1) = cancervariable.glucosematrix(rem(cell_position-1,N)+1-1,1);
+                            end
+                            if(cancervariable.statematrix(rem(cell_position-1,N)+1,M) == 2)
+                                glucose(2) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,M);
+                            end
+                            if(cancervariable.statematrix(rem(cell_position-1,N)+1+1,1) == 2)
+                                glucose(3) = cancervariable.glucosematrix(rem(cell_position-1,N)+1+1,1);
+                            end
+                            if(cancervariable.statematrix(rem(cell_position-1,N)+1,2) == 2)
+                                glucose(4) = cancervariable.glucosematrix(rem(cell_position-1,N)+1,2);
+                            end
+                                
+                            a = find(max(glucose) == glucose);
+                                 
                             if a == 1
                                 state_matrix(rem(cell_position-1,N)+1-1,1) = 4;
                             elseif a == 2
@@ -579,9 +571,23 @@ for k = 1:cancervariable.noofogenerations
                             || death_matrix(N,1) == 2 ...
                             || death_matrix(1,M) == 2
         
-                            a = find(max([cancervariable.glucosematrix(1,2),cancervariable.glucosematrix(2,1),cancervariable.glucosematrix(N,1),cancervariable.glucosematrix(1,M)]) ...
-                            == [cancervariable.glucosematrix(1,2),cancervariable.glucosematrix(2,1),cancervariable.glucosematrix(N,1),cancervariable.glucosematrix(1,M)]);
-            
+                            glucose = zeros(4,1);
+                            if(cancervariable.statematrix(1,2) == 2)
+                                glucose(1) = cancervariable.glucosematrix(1,2);
+                            end
+                            if(cancervariable.statematrix(2,1) == 2)
+                                glucose(2) = cancervariable.glucosematrix(2,1);
+                            end
+                            if(cancervariable.statematrix(N,1) == 2)
+                                glucose(3) = cancervariable.glucosematrix(N,1);
+                            end
+                            if(cancervariable.statematrix(1,M) == 2)
+                                glucose(4) = cancervariable.glucosematrix(1,M);
+                            end
+                            
+                            a = find(max(glucose) == glucose);
+                            
+                            
                             if a == 1
                                 state_matrix(1,2) = 4;
                             elseif a == 2
@@ -599,9 +605,22 @@ for k = 1:cancervariable.noofogenerations
                             || death_matrix(N,M) == 2 ...
                             || death_matrix(1,M-1) == 2
         
-                            a = find(max([cancervariable.glucosematrix(1,1),cancervariable.glucosematrix(2,M),cancervariable.glucosematrix(N,M),cancervariable.glucosematrix(1,M-1)]) ...
-                            == [cancervariable.glucosematrix(1,1),cancervariable.glucosematrix(2,M),cancervariable.glucosematrix(N,M),cancervariable.glucosematrix(1,M-1)]);
-            
+                            glucose = zeros(4,1);
+                            if(cancervariable.statematrix(1,1) == 2)
+                                glucose(1) = cancervariable.glucosematrix(1,1);
+                            end
+                            if(cancervariable.statematrix(2, M) == 2)
+                                glucose(2) = cancervariable.glucosematrix(2, M);
+                            end
+                            if(cancervariable.statematrix(N,M) == 2)
+                                glucose(3) = cancervariable.glucosematrix(N,M);
+                            end
+                            if(cancervariable.statematrix(1,M-1) == 2)
+                                glucose(4) = cancervariable.glucosematrix(1,M-1);
+                            end
+                                
+                            a = find(max(glucose) == glucose);
+                                 
                             if a == 1
                                 state_matrix(1,1) = 4;
                             elseif a == 2
@@ -620,9 +639,22 @@ for k = 1:cancervariable.noofogenerations
                             || death_matrix(N-1,1) == 2 ...
                             || death_matrix(N,M) == 2
         
-                            a = find(max([cancervariable.glucosematrix(N,2),cancervariable.glucosematrix(1,1),cancervariable.glucosematrix(N-1,1),cancervariable.glucosematrix(N,M)]) ...
-                            == [cancervariable.glucosematrix(N,2),cancervariable.glucosematrix(1,1),cancervariable.glucosematrix(N-1,1),cancervariable.glucosematrix(N,M)]);
-            
+                            glucose = zeros(4,1);
+                            if(cancervariable.statematrix(N,2) == 2)
+                                glucose(1) = cancervariable.glucosematrix(N,2);
+                            end
+                            if(cancervariable.statematrix(1,1) == 2)
+                                glucose(2) = cancervariable.glucosematrix(1,1);
+                            end
+                            if(cancervariable.statematrix(N-1,1) == 2)
+                                glucose(3) = cancervariable.glucosematrix(N-1,1);
+                            end
+                            if(cancervariable.statematrix(N,M) == 2)
+                                glucose(4) = cancervariable.glucosematrix(N,M);
+                            end
+                                
+                            a = find(max(glucose) == glucose);
+                                   
                             if a == 1
                                 state_matrix(N,2) = 4;
                             elseif a == 2
@@ -640,9 +672,22 @@ for k = 1:cancervariable.noofogenerations
                             || death_matrix(N-1,M) == 2 ...
                             || death_matrix(N,M-1) == 2
         
-                            a = find(max([cancervariable.glucosematrix(N,1),cancervariable.glucosematrix(1,M),cancervariable.glucosematrix(N-1,M),cancervariable.glucosematrix(N,M-1)]) ...
-                            == [cancervariable.glucosematrix(N,1),cancervariable.glucosematrix(1,M),cancervariable.glucosematrix(N-1,M),cancervariable.glucosematrix(N,M-1)]);
-            
+                            glucose = zeros(4,1);
+                            if(cancervariable.statematrix(N,1) == 2)
+                                glucose(1) = cancervariable.glucosematrix(N,1);
+                            end
+                            if(cancervariable.statematrix(1,M) == 2)
+                                glucose(2) = cancervariable.glucosematrix(1,M);
+                            end
+                            if(cancervariable.statematrix(N-1,M) == 2)
+                                glucose(3) = cancervariable.glucosematrix(N-1,M);
+                            end
+                            if(cancervariable.statematrix(N,M-1) == 2)
+                                glucose(4) = cancervariable.glucosematrix(N,M-1);
+                            end
+                                
+                            a = find(max(glucose) == glucose);
+                                  
                             if a == 1
                                 state_matrix(N,1) = 4;
                             elseif a == 2
@@ -657,21 +702,9 @@ for k = 1:cancervariable.noofogenerations
                 end
         
                     
-                    
-                    if (state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) == 5 && cancervariable.pHmatrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) < cancervariable.pHqT)
-    
-                        state_matrix(rem(cell_position-1,N)+1,ceil(cell_position/N)) = 4;
-                    end
                 
                 end
-            end
         end
-        
-    end
-    
-    cancervariable.statematrix = state_matrix;
-    %visualise solution at ever 10 generation
-    if(rem(cancervariable.currentgeneration,10) == 1)
-        visualise(cancervariable);
-    end
+
 end
+
