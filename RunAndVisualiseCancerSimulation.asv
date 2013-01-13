@@ -7,7 +7,6 @@ function [ ] = RunAndVisualiseCancerSimulation()
 
 
 phi = [0.02 0.06 0.10 0.14 0.18];
-growthRates = zeros(5,1);
 
 for m = 1:5
 
@@ -61,7 +60,7 @@ cancervariable.pHqN = 7.1; % 7.1
 cancervariable.pHqT = 6.4; % 6.4
 cancervariable.radiusOfGyration = zeros(cancervariable.noofogenerations,1);
 
-cancervariable.f = 0.2;
+cancervariable.f = 0.1;
 
 cancervariable.vesseldensity = phi(m); % gives the density of the vessels in the cellular automaton grid
 
@@ -85,14 +84,7 @@ visualise(cancervariable);
 
 [cancervariable.statematrix growthRate] = cellular_automaton(cancervariable);
 
-growthRates(m) = growthRate;
-end
 
-figure;
-plot(phi,growthRates);
-title('growth rate vs vessel density');
-phi
-growthRates
 
 %plotGlucoseMatrix(cancervariable);
 %plotPHMatrix(cancervariable);

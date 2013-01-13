@@ -11,7 +11,7 @@ cancervariable.numberofvessels = round(cancervariable.vesseldensity*(cancervaria
 
 %now we need to randomly allocate a grid position to each of the vessels in
 %the simulation. (Note that for now we are assuming that a grid element in
-%the state matrix that contains a micro-vessel has value 3)
+%the state matrix that contains a micro-vessel has value 0)
 randomrownumber = randi(cancervariable.matrixrownumber,cancervariable.numberofvessels,1); % generate a vector of random integers between 1 and the matrix row number to be used as the random row number for each of the vessels
 randomcolnumber = randi(cancervariable.matrixcolnumber,cancervariable.numberofvessels,1);% generate a vector of random integers between 1 and the matrix column number to be used as the random column number for each of the vessels
 randomgridposition = [randomrownumber,randomcolnumber]; % store the row number and the column number in a matrix (each row of this matrix now represents the random position of a vessel)
@@ -20,49 +20,39 @@ randomgridposition = [randomrownumber,randomcolnumber]; % store the row number a
 for lcv_vesselposition = 1 : cancervariable.numberofvessels
    %check that for each direction there are no adjacent cells that are
    %already next to a vessel
-   while(isAllowedVesselPosition(randomgridposition(lcv_vesselposition,1),randomgridposition(lcv_vesselposition,2),cancervariable.statematrix)
-       
-       (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)-1),rowColID(randomgridposition(lcv_vesselposition,2))) ~=3 ...
-           && (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)-2),rowColID(randomgridposition(lcv_vesselposition,2))) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)-1),rowColID(randomgridposition(lcv_vesselposition,2)-1)) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)-1),rowColID(randomgridposition(lcv_vesselposition,2)+1)) == 3)) ...
-           || ...
-           (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)),rowColID(randomgridposition(lcv_vesselposition,2)-1)) ~=3 ...
-           && (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)-1),rowColID(randomgridposition(lcv_vesselposition,2)-1)) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)),rowColID(randomgridposition(lcv_vesselposition,2)-2)) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)+1),rowColID(randomgridposition(lcv_vesselposition,2)-1)) == 3)) ...
-           || ...
-           (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)),rowColID(randomgridposition(lcv_vesselposition,2)+1)) ~=3 ...
-           && (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)-1),rowColID(randomgridposition(lcv_vesselposition,2)+1)) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)),rowColID(randomgridposition(lcv_vesselposition,2)+2)) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)+1),rowColID(randomgridposition(lcv_vesselposition,2)+1)) == 3)) ...
-           || ...
-           (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)+1),rowColID(randomgridposition(lcv_vesselposition,2))) ~=3 ...
-           && (cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)+1),rowColID(randomgridposition(lcv_vesselposition,2)-1)) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)+2),rowColID(randomgridposition(lcv_vesselposition,2))) == 3 ...
-           || cancervariable.statematrix(rowColID(randomgridposition(lcv_vesselposition,1)+1),rowColID(randomgridposition(lcv_vesselposition,2)+1)) == 3)) ...
-           || ...
-           cancervariable.statematrix(randomgridposition(lcv_vesselposition,1),randomgridposition(lcv_vesselposition,2)) == 3)
-           
+   while( isNotAllowedVesselPosition(cancervariable,randomgridposition,lcv_vesselposition))           
            randomgridposition(lcv_vesselposition,1) = randi(cancervariable.matrixrownumber,1);
            randomgridposition(lcv_vesselposition,2) = randi(cancervariable.matrixcolnumber,1);
    end
        
-   cancervariable.statematrix(randomgridposition(lcv_vesselposition,1),randomgridposition(lcv_vesselposition,2)) = 3;
+   cancervariable.statematrix(randomgridposition(lcv_vesselposition,1),randomgridposition(lcv_vesselposition,2)) = 1;
 end
 
-%%%%%%%%%%NEED TO ADD CODE TO TACKLE THE PROBLEM OF THE VESSEL CONSTRAINTS%%%%%%%%%%%
-
 %%%%% Now we need to add the disk of tumor cells with diameter given by cancervariable.initialtumourdiameter to the center of the grid
-cancervariable.statematrix(round(cancervariable.matrixrownumber/2),round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=2;
-cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=2;
-cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=2;
-cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=2;
-cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=2;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2),round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-1,round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2):round(cancervariable.matrixcolnumber/2)-floor(cancervariable.initialtumourdiameter/2)+cancervariable.initialtumourdiameter-1)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)+2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=4;
+cancervariable.statematrix(round(cancervariable.matrixrownumber/2)-2,round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2):round(cancervariable.matrixcolnumber/2)-floor((cancervariable.initialtumourdiameter-2)/2)+cancervariable.initialtumourdiameter-3)=4;
+
+%cancervariable.statematrix(50,50) = 4;
+%cancervariable.statematrix(50,51) = 4;
+%cancervariable.statematrix(51,50) = 4;
+%cancervariable.statematrix(51,51) = 4;
+
+[rr cc] = meshgrid(1:cancervariable.matrixrownumber,1:cancervariable.matrixcolnumber);
+C = sqrt((rr-round(cancervariable.matrixrownumber/2)).^2+(cc-round(cancervariable.matrixcolnumber/2)).^2)<=floor(cancervariable.initialtumourdiameter/2);
+
+%for i=1:cancervariable.matrixrownumber
+%    for j=1:cancervariable.matrixcolnumber
+%        if (C(i,j) == 1)
+%            cancervariable.statematrix(i,j) = 4;
+%        end
+%    end
+%end
 
 statematrix = cancervariable.statematrix;
 
-figure;
-imagesc(cancervariable.statematrix);
+
 end
 

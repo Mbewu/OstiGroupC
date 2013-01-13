@@ -1,4 +1,4 @@
-function [state_matrix] = cellular_automaton(cancervariable)
+function [state_matrix growthRate] = cellular_automaton(cancervariable)
 
 N = cancervariable.matrixrownumber;
 M = cancervariable.matrixcolnumber;
@@ -42,8 +42,10 @@ for k = 1:cancervariable.noofogenerations
         visualise(cancervariable);
         figure;
         plot(cancervariable.radiusOfGyration(1:cancervariable.currentgeneration));
-        title(['radius of gyration (HA = ' num2str(cancervariable.hr(4))  ') until generation ' num2str(cancervariable.currentgeneration)])
+        title(['radius of gyration (HA = ' num2str(cancervariable.hr(4))  ' until generation ' num2str(cancervariable.currentgeneration)])
         
     end
 end
+
+growthRate = calculateGrowthRate( cancervariable );
 
