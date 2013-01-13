@@ -147,10 +147,6 @@ function run_button_Callback(hObject, eventdata, handles)
     HTA = str2num(get(handles.edit17, 'string'));
     HTQ = str2num(get(handles.edit20, 'string'));
     delta = str2num(get(handles.edit19, 'string'));
-    diffG = str2num(get(handles.edit25, 'string'));
-    diffH = str2num(get(handles.edit26, 'string'));
-    permG = str2num(get(handles.edit27, 'string'));
-    permH = str2num(get(handles.edit28, 'string'));
 
     axes(handles.stateMatrixAxes);
     plot(-5:0.1:5);
