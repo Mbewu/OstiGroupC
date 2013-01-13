@@ -12,7 +12,7 @@ for i=1:cancervariable.matrixrownumber
     end
 end
 
-imagesc(cancervariable.glucosematrix)
+pcolor(cancervariable.glucosematrix)
 if(max ~= 0)
     caxis([min(min(cancervariable.glucosematrix)) max])
 end
