@@ -126,31 +126,6 @@ end
 function run_button_Callback(hObject, eventdata, handles)
 % RUN_BUTTON_CALLBACK Runs double pendulum animation.
 %
-%   parameters:
-%
-%   ivp=[phi1; dtphi1; phi2; dtphi2; g; m1; m2; l1; l2]
-%
-%                               Initial value problem. phi1 and dtphi1 are
-%                               the initial angle and anglular velocity. g
-%                               is gravity, m1 and l1 mass and rod length.
-%                               For an explaining picture, see
-%                               documentation file in same folder.
-%  
-%   duration                    The time interval on which the ode is
-%                               solved spans from 0 to duration (in sec).
-%
-%   fps                         Frames Per Second. The framerate is
-%                               relevant both for normal (realtime)
-%                               animation and movie recording.
-%
-%   movie                       If false, a normal realtime animation of
-%                               the motion of the double pendulum (the 
-%                               framerate being fps) is shown.
-%                               If true, a movie (.avi) is recorded. The
-%                               filename is 'doublePendulumAnimation.avi'
-%                               and the folder into which it is saved is
-%                               the current working directory.
-
 
 
     N                = str2num(get(handles.gridSizeN, 'string'))
@@ -170,7 +145,16 @@ function run_button_Callback(hObject, eventdata, handles)
     HTQ                 = str2num(get(handles.edit20, 'string'))
     delta               = str2num(get(handles.edit19, 'string'))
 
-    plot(ones(5));
+    axes(handles.stateMatrixAxes);
+    plot(-5:0.1:5);
+    
+    axes(handles.glucoseAxes);
+    plot((-5:0.1:5).^2);
+      
+    axes(handles.pHAxes);
+    plot((-5:0.1:5).^3);
+      
+    
 
 function myFigure_CreateFcn(hObject, eventdata, handles, varargin)
 
@@ -506,3 +490,30 @@ function edit20_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes during object creation, after setting all properties.
+function stateMatrixAxes_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to stateMatrixAxes (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate stateMatrixAxes
+
+
+% --- Executes during object creation, after setting all properties.
+function glucoseAxes_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to glucoseAxes (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate glucoseAxes
+
+
+% --- Executes during object creation, after setting all properties.
+function pHAxes_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to pHAxes (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate pHAxes
