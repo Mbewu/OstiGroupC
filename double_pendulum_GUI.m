@@ -126,40 +126,106 @@ end
 function run_button_Callback(hObject, eventdata, handles)
 % RUN_BUTTON_CALLBACK Runs double pendulum animation.
 %
-
-
-    numrows = str2num(get(handles.gridSizeN, 'string'));
-    numcols = str2num(get(handles.edit22, 'string'));
-    vesseldensity = str2num(get(handles.dtphi1_edit, 'string'));
-    tumordisk = str2num(get(handles.edit23, 'string'));
-    Gs = str2num(get(handles.phi2_edit, 'string'));
-    Hs = str2num(get(handles.edit29, 'string'));
-    GdN = str2num(get(handles.g_edit, 'string'));
-    GdT = str2num(get(handles.m1_edit, 'string'));
-    HdN = str2num(get(handles.m2_edit, 'string'));
-    HdT = str2num(get(handles.l1_edit, 'string'));
-    HqN = str2num(get(handles.l2_edit, 'string'));
-    HqT = str2num(get(handles.duration_edit, 'string'));
-    numofgen = str2num(get(handles.edit24, 'string'));
+clc;
+%% Define all of the main variables
+    cancervariable.matrixrownumber  = str2num(get(handles.gridSizeN, 'string'));
+    cancervariable.matrixcolnumber = str2num(get(handles.edit22, 'string'));
+    cancervariable.vesseldensity = str2num(get(handles.dtphi1_edit, 'string'));
+    cancervariable.initialtumourdiameter = str2num(get(handles.edit23, 'string'));
+    cancervariable.G_S = str2num(get(handles.phi2_edit, 'string'));
+    cancervariable.H_S = str2num(get(handles.edit29, 'string'));
+    cancervariable.GdN = str2num(get(handles.g_edit, 'string'));
+    cancervariable.GdT = str2num(get(handles.m1_edit, 'string'));
+    cancervariable.pHdN = str2num(get(handles.m2_edit, 'string'));
+    cancervariable.pHdT = str2num(get(handles.l1_edit, 'string'));
+    cancervariable.pHqN = str2num(get(handles.l2_edit, 'string'));
+    cancervariable.pHqT = str2num(get(handles.duration_edit, 'string'));
+    cancervariable.noofogenerations = str2num(get(handles.edit24, 'string'));
     fInv = str2num(get(handles.fps_edit, 'string'));
+    cancervariable.f = 1/fInv;
+    f = cancervariable.f;
+    cancervariable.kr = zeros(7,1);
     kN = str2num(get(handles.edit15, 'string'));
     kT = str2num(get(handles.edit16, 'string'));
+    cancervariable.kr(2) = 0; % empty k
+    cancervariable.kr(3) = kN; % normal k
+    cancervariable.kr(4)= kT; % activetumor k (1/s)
+    cancervariable.kr(5)= kT; % quiescenttumor k (1/s)
+    cancervariable.kr(6)= kN; % quiescentnormal k (1/s)
+    cancervariable.kr(7)= 0; % empty tumor k (1/s)
+    cancervariable.hr = zeros(7,1);
     HTA = str2num(get(handles.edit17, 'string'));
     HTQ = str2num(get(handles.edit20, 'string'));
-    delta = str2num(get(handles.edit19, 'string'));
-    diffG = str2num(get(handles.edit25, 'string'));
-    diffH = str2num(get(handles.edit26, 'string'));
-    permG = str2num(get(handles.edit27, 'string'));
-    permH = str2num(get(handles.edit28, 'string'));
-
-    axes(handles.stateMatrixAxes);
-    plot(-5:0.1:5);
+    cancervariable.hr(2) = 0; % empty k
+    cancervariable.hr(3) = 0; % normal k
+    cancervariable.hr(4)= HTA; % activetumor k (1/s)
+    cancervariable.hr(5) = HTQ; % quiescenttumor
+    cancervariable.hr(6) = 0; % quiescentnormal
+    cancervariable.hr(7) = 0; % empty tumor k
+    cancervariable.spacestep = str2num(get(handles.edit19, 'string'));
+    cancervariable.D_G = str2num(get(handles.edit25, 'string'));
+    cancervariable.D_H = str2num(get(handles.edit26, 'string'));
+    cancervariable.q_G = str2num(get(handles.edit27, 'string'));
+    cancervariable.q_H = str2num(get(handles.edit28, 'string'));
     
-    axes(handles.glucoseAxes);
-    plot((-5:0.1:5).^2);
-      
-    axes(handles.pHAxes);
-    plot((-5:0.1:5).^3);
+    cancervariable.statematrix = 3*ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the state of each grid element (i.e. is it  a micro-vessel = 1, empty normal = 2, normal cell = 3, activetumor cell = 4, quiescenttumor cell = 5, quiescent normal = 6, empty tumor = 7). Notice that we're populating the matrix with normal cells
+    cancervariable.pHmatrix = ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the value of the pH of the corresponding grid element
+    cancervariable.glucosematrix = ones(cancervariable.matrixrownumber,cancervariable.matrixcolnumber); % matrix representing the value of the glucose concentration of the corresponding grid element
+    cancervariable.currentgeneration = 1;
+    cancervariable.radiusOfGyration = zeros(cancervariable.noofogenerations,1);
+    
+%% Set up the initial state of the matrix and plot it
+    cancervariable.statematrix = initStateMatrix(cancervariable);
+    
+    axes(handles.stateMatrixAxes);
+    plotStateMatrix(cancervariable);
+    
+%% Calculate the matrices and plot the glucose, lactic acid and state matrices
+N = cancervariable.matrixrownumber;
+M = cancervariable.matrixcolnumber;
+state_matrix = cancervariable.statematrix;
+
+%RANDOMLY PICK 1/f OF CELLS TO UPDATE FOR SUB-GENERATION
+
+for k = 1:cancervariable.noofogenerations
+    
+    cancervariable.currentgeneration = k;
+    vector_random = randperm(N*M);
+    
+    %SUBGENERATIONS
+    for n = 1:ceil(1/f)
+        death_matrix = state_matrix;
+        %%%%%%%ENTER GLUCOSE FUNCTION%%%%%%%%%%%
+        cancervariable.glucosematrix = findGlucoseMatrix(cancervariable);
+        %%%%%%%ENTER LACTIC ACID FUNCTION%%%%%%%%%%%
+        cancervariable.pHmatrix = findPHMatrix(cancervariable);
+        %%%%%%%ENTER STATE MATRIX FUNCTION%%%%%%%%%%
+        state_matrix = subgeneration(cancervariable,n,death_matrix,state_matrix,vector_random);
+        
+        cancervariable.statematrix = state_matrix;
+        axes(handles.glucoseAxes);
+        plotGlucoseMatrix(cancervariable);
+        
+        axes(handles.pHAxes);
+        plotPHMatrix(cancervariable);
+    end
+    
+    axes(handles.stateMatrixAxes);
+    plotStateMatrix(cancervariable);
+    
+    cancervariable.radiusOfGyration(k) = radiusOfGyration(cancervariable);
+    axes(handles.tumorsize);
+    plot(1:k,cancervariable.radiusOfGyration(1:k));
+    
+end
+    %axes(handles.stateMatrixAxes);
+    %plotStateMatrix(cancervariable);
+    
+%     axes(handles.glucoseAxes);
+%     plotGlucoseMatrix(cancervariable);
+%       
+%     axes(handles.pHAxes);
+%     plotPHMatrix(cancervariable);
       
     
 
@@ -524,3 +590,32 @@ function pHAxes_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: place code in OpeningFcn to populate pHAxes
+
+
+
+function edit29_Callback(hObject, eventdata, handles)
+% hObject    handle to edit29 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit29 as text
+%        str2double(get(hObject,'String')) returns contents of edit29 as a double
+
+
+function edit29_CreateFcn(hObject, eventdata, handles)
+
+function edit28_CreateFcn(hObject, eventdata, handles)
+
+function edit27_CreateFcn(hObject, eventdata, handles)
+
+function edit26_CreateFcn(hObject, eventdata, handles)
+
+function edit25_CreateFcn(hObject, eventdata, handles)
+
+function edit24_CreateFcn(hObject, eventdata, handles)
+
+function edit23_CreateFcn(hObject, eventdata, handles)
+
+function edit22_CreateFcn(hObject, eventdata, handles)
+
+

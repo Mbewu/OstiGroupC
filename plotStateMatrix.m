@@ -1,4 +1,4 @@
-function [ ] = plotStateMatrix( cancervariable )
+function [ ] = plotStateMatrix( cancervariable)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
