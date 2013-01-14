@@ -1,29 +1,137 @@
 %% LyX 2.0.4 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[10pt,ngerman,english,12pt]{paper}
+\documentclass[12pt,ngerman,english,pointlessnumbers, abstracton, headsepline]{scrreprt}
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
-\usepackage[a4paper]{geometry}
+\usepackage{geometry}
 \geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
-\setcounter{secnumdepth}{1}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
 \usepackage{color}
 \usepackage{calc}
-\usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
 
 \makeatletter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-\numberwithin{equation}{section}
-\numberwithin{figure}{section}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\renewcommand\[{\begin{equation}}
+\renewcommand\]{\end{equation}}
+
+% for different coloured margin notes
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]
+{\-\oldmarginpar[\color{red}\sffamily\raggedleft\scriptsize #1]%
+{\color{red}\sffamily\raggedright\scriptsize #1}}
+
+
+
+\usepackage{sverb}
 
 \usepackage{geometry}
- \geometry{verbose,a4paper,margin=2.5cm}
-\usepackage{alltt}
-\usepackage{sverb}
-\usepackage{graphicx,color,psfrag}
+
+\geometry{verbose,a4paper}
+
+% verschieden Symbole, Zeichen wie (c), ¤
+\usepackage{textcomp}
+
+%\addtokomafont{caption}{\footnotesize}
+\usepackage [font=sf, size=footnotesize, labelfont={sf,bf}]{caption}
+
+\usepackage{pdflscape}
+
+\usepackage{ %a4wide,
+            ellipsis, fixltx2e, mparhack,   %Fehlerkorrektur für Marginalien
+            booktabs, longtable             %schönere Tabellen
+}  
+
+\usepackage[automark]{scrpage2}
+%\automark[chapter]{chapter}
+\clearscrheadfoot
+\ohead{\\\headmark}
+%\ihead{\includegraphics[scale=0.25]{pics/logo_schwarz.pdf}}%\pagemark}
+\ofoot[\pagemark]{\pagemark}
+
+
+%Kurzfassung und Abstract (englisch) auf eine Seite
+\renewenvironment{abstract}{
+    \@beginparpenalty\@lowpenalty
+      \begin{center}
+        \normalfont\sectfont\nobreak\abstractname
+        \@endparpenalty\@M
+      \end{center}
+}{
+    \par
+}
+
+
+
+% schönerer Blocksatz!!
+\usepackage{microtype}
+
+\usepackage{ifpdf} % part of the hyperref bundle
+\ifpdf % if pdflatex is used
+
+%set fonts for nicer pdf view
+ \IfFileExists{lmodern.sty}{\usepackage{lmodern}}
+  {\usepackage[scaled=0.92]{helvet}
+    \usepackage{mathptmx}
+    \usepackage{courier} }
+\fi
+
+ % the pages of the TOC are numbered roman
+ % and a pdf-bookmark for the TOC is added
+ \pagenumbering{roman}
+ \let\myTOC\tableofcontents
+ \renewcommand\tableofcontents{
+   %\pdfbookmark[1]{Contents}{}
+   \myTOC
+   \clearpage
+   \pagenumbering{arabic}}
+
+%Bezeichungen anpassen
+%Babelpaket muß zuvor geladen werden
+%\usepackage[ngerman]{babel}
+%\addto\captionsngerman{ 
+%\renewcommand{\figurename}{Abb.}% 
+%\renewcommand{\tablename}{Tab.}% 
+%\renewcommand{\abstractname}{Kurzfassung}
+%\renewcommand{\nomname}{Abkürzungen}
+%}
+
+% Alle Querverweise und URLs als Link darstellen
+% In der PDF-Ausgabe
+ \usepackage[colorlinks=true, bookmarks, bookmarksnumbered, bookmarksopen, bookmarksopenlevel=1,
+  linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,
+  pdfpagelayout=OneColumn, pdfnewwindow=true,
+  pdfstartview=XYZ, plainpages=false, pdfpagelabels,
+  pdfauthor={LyX Team}, pdftex,
+  pdftitle={LyX's Figure, Table, Floats, Notes, and Boxes manual},
+  pdfsubject={LyX-documentation about figures, tables, floats, notes, and boxes},
+  pdfkeywords={LyX, Tables, Figures, Floats, Boxes, Notes}]{hyperref}
+
+%mehr Platz zwischen Überschrift und Tabelle
+\newcommand{\@ldtable}{}
+\let\@ldtable\table
+\renewcommand{\table}{ %
+                 \setlength{\@tempdima}{\abovecaptionskip} %
+                 \setlength{\abovecaptionskip}{\belowcaptionskip} %
+                 \setlength{\belowcaptionskip}{\@tempdima} %
+                 \@ldtable}
+
+%Aradi-style Schriftart
+%\usepackage{mathpazo}
+
+% Schriftgröße auf 13 stellen
+%\usepackage{type1cm}
+%\renewcommand\normalsize{%
+%   \@setfontsize\normalsize{13pt}{14.5pt}%
+%   \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
+%   \abovedisplayshortskip \z@ \@plus3\p@
+%   \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+%   \belowdisplayskip \abovedisplayskip
+ %  \let\@listi\@listI}\normalsize  
 
 \makeatother
 
@@ -33,12 +141,13 @@
 \title{OSTI Phase 1: A Cellular Automaton Model of Early Tumor Growth and
 Invasion}
 
-\maketitle
-The Effects of Native Tissue Vascularity and Increased Anaerobic Tumor
-Metabolism by A.A. Patel et al.
 
-\rule[0.5ex]{1\linewidth}{1pt}\\
-{\Large Systems Biology DTC 2012}{\Large \par}
+\subtitle{The Effects of Native Tissue Vascularity and Increased Anaerobic
+Tumor Metabolism by A.A. Patel et al.}
+
+
+\subtitle{\rule[0.5ex]{1\linewidth}{1pt}\\
+{\Large Systems Biology DTC 2012}}
 
 
 \author{Name 1, 2, 3, 4, 5 (no particular order)}
@@ -50,9 +159,11 @@ University of Oxford\\
 \foreignlanguage{ngerman}{{\normalsize \vspace{0.5cm}
 }}}
 
+\maketitle
 \tableofcontents{}
 
-Introduction
+
+\chapter{Introduction}
 
 
 \subsection*{by Jackie Ang}
@@ -84,7 +195,8 @@ shown{[}1{]} that anaerobic respiration in tumour cells persists even
 in high levels of oxygen and tumour cell viability is independent
 of oxygen levels{[}2{]}. 
 
-Methods 
+
+\chapter{Methods }
 
 
 \subsection*{by Jackie Ang et al.}
@@ -380,7 +492,4 @@ and reshape $D^{-1}$ into $G\in\mathbb{R}^{N\times N}$, \ref{eq:map_CfromIJ}
 and \ref{eq:map_IJfromC} to convert.\end{enumerate}
 %
 \end{minipage}}
-
-
-\section*{}
 \end{document}
