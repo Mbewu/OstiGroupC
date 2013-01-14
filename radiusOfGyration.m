@@ -65,7 +65,7 @@ end
 secondMoment = radius;
 %secondMomentAdjusted = radius + area*count*centroid(2)^2;
 %radius = radius*area;% + count*area*(distance^2);
-radiusOfGyration = sqrt(radius/(area*count))
+radiusOfGyration = sqrt(radius/(area*count));
 
 
 

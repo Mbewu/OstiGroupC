@@ -31,8 +31,8 @@ function [ ] = plotStateMatrix( cancervariable)
 imagesc(cancervariable.statematrix);
 caxis([1 7]); %color range from 1 to 6
 colorbar;
-title(['State Matrix at Generation ' num2str(cancervariable.currentgeneration) ...
-    ', where 1=vessel,2=necrosisnormal,3=quiescnormal,4=activetumor,5=quiesctumor,6=quiescnorm,7=necrosistumor']);
+title({'State Matrix at Generation' num2str(cancervariable.currentgeneration)...
+    'where 1=vessel,2=necrosisnormal,3=quiescnormal, 4=activetumor,5=quiesctumor,6=quiescnorm,7=necrosistumor'});
 
 end
 
