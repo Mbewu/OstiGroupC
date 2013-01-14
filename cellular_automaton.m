@@ -24,14 +24,14 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [state_matrix growthRate] = cellular_automaton(cancervariable)
+function [state_matrix growthRate radius] = cellular_automaton(cancervariable)
 
 N = cancervariable.matrixrownumber;
 M = cancervariable.matrixcolnumber;
 state_matrix = cancervariable.statematrix;
 f = cancervariable.f;
 
-figure;
+handles.figure = figure('Position', [100 100 1366 768]);
 
 handles.state = subplot(2,2,1);
 ax1=get(handles.state,'position'); % Save the position as ax
@@ -98,7 +98,16 @@ for k = 1:cancervariable.noofogenerations
     set(handles.tumorsize,'position',ax2); % Manually setting this holds the position with colorbar 
     axes(handles.tumorsize);
     plotRadiusOfGyration(cancervariable,k);
+    
+    if(rem(cancervariable.currentgeneration,10) == 1)
+        print(handles.figure,'-dbitmap',['data\figureVD' num2str(cancervariable.vesseldensity) ...
+            'HA' num2str(cancervariable.hr(4)) 'generation' num2str(cancervariable.currentgeneration) ...
+            '.bmp']);
+    end
+    
+    
 end
 
 growthRate = calculateGrowthRate( cancervariable )
+radius = cancervariable.radiusOfGyration;
 

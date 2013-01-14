@@ -1,0 +1,24 @@
+Simulation for vessel densities 
+0.050000
+0.100000
+and acid production rates 
+0.000050
+New Simulation 
+vesselDensity = 0.050000 
+tumorAcid = 0.000050 
+tumorSize 
+0.003241
+0.003608
+0.005001
+0.006205
+0.006936
+0.007659
+0.008517
+0.009787
+0.010640
+0.011976
+growthRate 
+0.000966
+New Simulation 
+vesselDensity = 0.100000 
+tumorAcid = 0.000050 

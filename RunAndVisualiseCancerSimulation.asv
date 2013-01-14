@@ -32,12 +32,14 @@ function [ ] = RunAndVisualiseCancerSimulation()
 %% Section 1: Defining the variables for the problem
 
 
-phi = [0.05 0.1];
-HA = [5e-5];
+phi = 0.01*ones(6,1);
+%phi = [0.02 0.06 0.10 0.14 0.18];
+HA = [5e-5] ;
+%growthRates = zeros(length(phi),1);
+growthRates = zeros(length(HA),1);
 
-filename = 'data\dataFile.dat';
 
-fileID = fopen(filename,'w+');
+fileID = fopen('data.dat','a+');
 fprintf(fileID,'Simulation for vessel densities \n');
 fprintf(fileID,'%f\n',phi);
 fprintf(fileID,'and acid production rates \n');
@@ -103,7 +105,7 @@ cancervariable.vesseldensity = phi(m); % gives the density of the vessels in the
 cancervariable.hr(4) = HA(a);
 
 %write to file
-fileID = fopen(filename,'a+');
+fileID = fopen('data.dat','a+');
 fprintf(fileID,'New Simulation \n');
 fprintf(fileID,'vesselDensity = %f \n',cancervariable.vesseldensity);
 fprintf(fileID,'tumorAcid = %f \n',cancervariable.hr(4));
@@ -127,9 +129,9 @@ cancervariable.pHmatrix = findPHMatrix(cancervariable);
 
 [cancervariable.statematrix growthRate radiusOfGyration] = cellular_automaton(cancervariable);
 
-%growthRates(m) = growthRate;
+growthRates(m) = growthRate;
 
-fileID = fopen(filename,'a+');
+fileID = fopen('data.dat','a+');
 fprintf(fileID,'tumorSize \n');
 fprintf(fileID,'%f\n',radiusOfGyration);
 fprintf(fileID,'growthRate \n');
@@ -138,6 +140,21 @@ fclose(fileID);
 
 end
 end
+figure;
+plot(HA,growthRates);
+title('growth rate vs vessel density');
+HA
+growthRates
+
+figure;
+plot(HA,growthRates);
+title('growth rate vs vessel density');
+
+%plotGlucoseMatrix(cancervariable);
+%plotPHMatrix(cancervariable);
+%plotStateMatrix(cancervariable);
+%figure;
+%imagesc(cancervariable.statematrix);
 
 
 

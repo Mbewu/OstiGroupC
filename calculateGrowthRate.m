@@ -28,7 +28,7 @@ function [ growthRate ] = calculateGrowthRate( cancervariable )
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
-generations = cancervariable.noofogenerations-10:cancervariable.noofogenerations;
+generations = cancervariable.noofogenerations-9:cancervariable.noofogenerations;
 generations = generations';
 radiusOfGyration = cancervariable.radiusOfGyration(generations);
 

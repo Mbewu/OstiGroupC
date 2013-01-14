@@ -1,0 +1,130 @@
+New Simulation 
+vesselDensity = 0.010000 
+tumorAcid = 0.000050 
+tumorSize 
+0.003007
+0.004389
+0.007090
+0.008787
+0.009330
+0.010742
+0.011699
+0.012334
+0.012734
+0.013832
+growthRate 
+0.001165
+Simulation for vessel densities 
+0.010000
+0.010000
+0.010000
+0.010000
+0.010000
+0.010000
+and acid production rates 
+0.000050
+New Simulation 
+vesselDensity = 0.010000 
+tumorAcid = 0.000050 
+tumorSize 
+0.002842
+0.004765
+0.005880
+0.007260
+0.007645
+0.008556
+0.009825
+0.010545
+0.010971
+0.011556
+growthRate 
+0.000932
+New Simulation 
+vesselDensity = 0.010000 
+tumorAcid = 0.000050 
+tumorSize 
+0.002904
+0.004349
+0.005243
+0.005823
+0.006451
+0.006726
+0.007620
+0.008440
+0.009111
+0.009692
+growthRate 
+0.000703
+New Simulation 
+vesselDensity = 0.010000 
+tumorAcid = 0.000050 
+tumorSize 
+0.002655
+0.004115
+0.005085
+0.006128
+0.006955
+0.007874
+0.008766
+0.009603
+0.010322
+0.010484
+growthRate 
+0.000881
+New Simulation 
+vesselDensity = 0.010000 
+tumorAcid = 0.000050 
+Simulation for vessel densities 
+0.100000
+and acid production rates 
+0.000050
+New Simulation 
+vesselDensity = 0.100000 
+tumorAcid = 0.000050 
+Simulation for vessel densities 
+0.100000
+and acid production rates 
+0.000050
+New Simulation 
+vesselDensity = 0.100000 
+tumorAcid = 0.000050 
+tumorSize 
+0.002552
+0.003011
+0.003995
+0.005111
+0.006162
+0.007374
+0.008651
+0.010046
+0.010941
+0.012571
+growthRate 
+0.001138
+Simulation for vessel densities 
+0.100000
+and acid production rates 
+0.000050
+New Simulation 
+vesselDensity = 0.100000 
+tumorAcid = 0.000050 
+Simulation for vessel densities 
+0.100000
+and acid production rates 
+0.000050
+New Simulation 
+vesselDensity = 0.100000 
+tumorAcid = 0.000050 
+tumorSize 
+0.002842
+0.003460
+0.003845
+0.005437
+0.006328
+0.007140
+0.008731
+0.009871
+0.010494
+0.011519
+growthRate 
+0.001019
