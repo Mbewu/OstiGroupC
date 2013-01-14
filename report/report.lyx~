@@ -1,0 +1,3299 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass paper
+\begin_preamble
+
+\usepackage{geometry}
+ \geometry{verbose,a4paper,margin=2.5cm}
+\usepackage{alltt}
+\usepackage{sverb}
+\usepackage{graphicx,color,psfrag}
+\end_preamble
+\options 12pt
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 1
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Notes on Stats & R practical
+\end_layout
+
+\begin_layout Author
+Alexander Erlich (SysBio DTC)
+\end_layout
+
+\begin_layout Section
+Testing whether a mutation affects red blood cell volumes
+\end_layout
+
+\begin_layout Standard
+The code of this practical is given as an appendix to these notes.
+ Running the script in R will create relevant output (confidence intervals
+ etc.).
+ The script will produce images at runtime; to get to the next image hit
+ <Enter>.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We are considering mutations of a specific gene related to red blood cells
+ of which we are considering three mutations.
+ We will refer to them as mutations of category 0, 1 and 2.
+ The dataset we are considering consists of the volumes of red blood cells
+ of 1642.
+ Each person has a mutation of one of the mutation categories.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An overview of the data is given in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:histograms"
+
+\end_inset
+
+.
+ Given the shape of the histogram data and since the red blood cell volumes
+ are dependent in a complex manner on many (mostly independent) parameters,
+ an underlying normal distribution would be a reasonable guess for the data.
+ Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:QQ-plots"
+
+\end_inset
+
+ shows quantile-quantile plots of the same datasets versus normally distributed
+ quantiles, (qualitatively) confirming the underlying normal distribution
+ for the datasets.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At this point it would be interesting to consider the properties of the
+ different distributions.
+ In a sample of 
+\begin_inset Formula $n$
+\end_inset
+
+ random variables 
+\begin_inset Formula $X_{1},X_{2}\ldots,X_{n}$
+\end_inset
+
+ we define the mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and the variance 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ to be 
+\begin_inset Formula 
+\[
+\langle X\rangle=\frac{1}{n}\sum_{i=1}^{n}X_{i}\qquad\sigma^{2}=\frac{1}{n-1}\sum\left(X_{i}-\langle X\rangle\right)^{2}
+\]
+
+\end_inset
+
+The overall population (volumes) is normalised to a mean of zero and has
+ a variance of 16.79.
+ But what about the different categories (which are different non-overlapping
+ subsets of the set of random variables that constitutes the overall population)
+? Their means deviate from zero.
+ To get a better estimate, we compute 95% confidence intervals for the means
+ of the populations of the different categories.
+ The intervals are
+\begin_inset Formula 
+\[
+\left[\langle X\rangle-1.96\frac{\sigma}{\sqrt{n}},\langle X\rangle+1.96\frac{\sigma}{\sqrt{n}}\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\langle X\rangle$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+ are computed from the random variables and sample size of the populations
+ of the different categories (i.e.
+ subsets of the whole population).
+ We obtain the intervals
+\begin_inset Formula 
+\begin{eqnarray*}
+\text{category 0:} &  & \left[0.157,1.9028\right]\\
+\text{category 1:} &  & \left[-0.086,0.547\right]\\
+\mbox{\text{category 2:}} &  & \left[-0.548,-0.022\right]
+\end{eqnarray*}
+
+\end_inset
+
+There is hardly any overlap! A two-sampled t test would be helpful in comparing
+ the means of the different categories.
+ A variance t test (with a standard 95% confidence interval) shows that
+ the null hypothesis (the variances of the two datasets are equal) needs
+ not be refuted but the test is borderline (the p-value is p-value = 0.05846).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+> var.test(cat0, cat2)
+\end_layout
+
+\begin_layout Plain Layout
+
+F test to compare two variances
+\end_layout
+
+\begin_layout Plain Layout
+
+data: cat0 and cat2 F = 1.2988, num df = 105, denom df = 897, p-value = 0.05846
+\end_layout
+
+\begin_layout Plain Layout
+
+alternative hypothesis: true ratio of variances is not equal to 1
+\end_layout
+
+\begin_layout Plain Layout
+
+95 percent confidence interval:
+\end_layout
+
+\begin_layout Plain Layout
+
+0.9908131 1.7595986
+\end_layout
+
+\begin_layout Plain Layout
+
+sample estimates:
+\end_layout
+
+\begin_layout Plain Layout
+
+ratio of variances 1.298839 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+Since the test is borderline, two sampled t tests (95% confidence interval)
+ for both equal and nonequal variances are determined, yielding p values
+ 0.17% and 0.54%, respectively.
+ The null hypothesis (the means of the two datasets are equal) must therefore
+ be refuted, suggesting that the means of the populations of mutation groups
+ 0 and 2 are significantly different.
+ If based on this result the null hypothesis were to be considered as refuted,
+ this would implicate a significant relationship between the red blood cell
+ volume and the mutation type.
+ So should the hypothesis be refuted?
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We must take into account that the comparison of only two samples is very
+ limited.
+ Had we compared 1000 mutations, we would have obtained as low a p value
+ as in the equal variance t test only in 1 case (
+\begin_inset Formula $p\cdot1000$
+\end_inset
+
+).
+ This is not a convincing result to prove a correlation.
+ Let us try to argue in an intuitive way: In the current case, we made a
+ two sampled t test between only two subsets of the population.
+ If we did a thousand such tests (assuming 1000 mutations) and given the
+ fact that the total population size is 1642, we would likely cover every
+ random variable of the population, many of them several times, giving contribut
+ion to mean value computation (given a sufficiently high sample size for
+ each of the subsets of the population).
+ This would be a more thorough evaluation of the means of subsets.
+ A reasonable approach would be to make a number of t tests with defined
+ subset sample sizes, considering the distribution of p values.
+ An interesting hypothesis to test whether the p values are normal distributed
+ and whether increasing subset sample sizes would decrease the variance
+ of the p distribution.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+> var.test(cat0, cat2)
+\end_layout
+
+\begin_layout Plain Layout
+
+print(t.test(cat0, cat2, var.equal = T))
+\end_layout
+
+\begin_layout Plain Layout
+
+print(t.test(cat0, cat2, var.equal = F))
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/histograms.pdf
+	width 80text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:histograms"
+
+\end_inset
+
+Overview of the overall distribution of red blood cell volumes in the entire
+ tested group (volumes) and the three mutation categories.
+ The total sample size is 1642, 106, 638 and 898, respectively.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/qqnorm.pdf
+	width 80text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:QQ-plots"
+
+\end_inset
+
+QQ plot of red blood cell volumes over normal distribution quantiles
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Modelling genetic variation
+\end_layout
+
+\begin_layout Standard
+Let us compare the genomic material of two humans (a small piece of the
+ genome).
+ In most cases, we will have different genomic material which we shall call
+ a mutation.
+ This term hints at the fact that every two humans have a common ancestor
+ whose genome mutated many times in the course of evolution.
+ Finally, evolution arrived at the two humans whose genome is compared.
+ This suggests that perhaps not all genes are mutations but that in rare
+ events, some bits of the sequences will coincide, being a remainder of
+ the common ancestor.
+ 
+\end_layout
+
+\begin_layout Standard
+We shall consider the event of a such coinciding sequence as a success,
+ having a success probability 
+\begin_inset Formula $0<p<0$
+\end_inset
+
+.
+ Before arriving at such a match, our comparison of genetic material will
+ have yielded
+\begin_inset Formula $k$
+\end_inset
+
+ mutations (
+\begin_inset Formula $0\leq k<\infty$
+\end_inset
+
+).
+ Accordingly, we model the probability 
+\begin_inset Formula $P$
+\end_inset
+
+ of obtaining a success (i.e.
+ genetic match) after 
+\begin_inset Formula $k$
+\end_inset
+
+ mutations in terms of a geometric distribution:
+\begin_inset Formula 
+\begin{equation}
+P\left(k|\theta\right)=\underbrace{\left(1-p\right)^{k}}_{k\text{ mutations}}\cdot\underbrace{p}_{\text{match}}\label{eq:pdistr}
+\end{equation}
+
+\end_inset
+
+The expectation value is 
+\begin_inset Formula 
+\begin{eqnarray*}
+\langle k\rangle & = & \sum_{k=0}^{\infty}k\cdot P\left(k|\theta\right)\\
+ & = & p\left(1-p\right)\sum_{k=0}^{\infty}k\left(1-p\right)^{k}
+\end{eqnarray*}
+
+\end_inset
+
+Now substitute 
+\begin_inset Formula $z=1-p$
+\end_inset
+
+ and use the relation for the geometric series 
+\begin_inset Formula 
+\[
+\sum_{i=0}^{\infty}z^{k}=\frac{1}{1-z}
+\]
+
+\end_inset
+
+in order to obtain (using the above substitution for 
+\begin_inset Formula $z$
+\end_inset
+
+)
+\begin_inset Formula 
+\begin{eqnarray*}
+\ldots & = & p\left(1-p\right)\frac{\mathrm{d}}{\mathrm{d}z}\left[\sum_{k=0}^{\infty}z^{k}\right]\\
+ & = & \frac{p\left(1-p\right)}{\left(1-z\right)^{2}}\\
+\langle k\rangle & = & \frac{1-p}{p}
+\end{eqnarray*}
+
+\end_inset
+
+The original distribution 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pdistr"
+
+\end_inset
+
+ is given in terms of a success probability 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Substituting 
+\begin_inset Formula 
+\[
+1-p=\frac{\theta}{\theta+1}
+\]
+
+\end_inset
+
+ we obtain equivalently 
+\begin_inset Formula 
+\[
+P\left(k|\theta\right)=\left(\frac{1}{1+\theta}\right)\left(\frac{\theta}{1+\theta}\right)^{k}\qquad\theta>0
+\]
+
+\end_inset
+
+where we call 
+\begin_inset Formula $\theta$
+\end_inset
+
+ the mutation rate.
+ Its interpretation can be obtained when considering 
+\begin_inset Formula $\langle k\rangle=\left(1-p\right)/p=\theta$
+\end_inset
+
+.
+ It is the average number of mutations that we obtain between a pair of
+ matching genes.
+ If, for instance, we observe 23 differences beetween a pair of genes at
+ one locus and 15 at another, we would obtain
+\begin_inset Formula 
+\[
+\langle k\rangle=\theta=\frac{23+15}{2}=19
+\]
+
+\end_inset
+
+Let us now obtain a maximum likelihood estimate 
+\begin_inset Formula $\hat{p}$
+\end_inset
+
+ for the parameter 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ The likelihood function 
+\begin_inset Formula $L$
+\end_inset
+
+ is defined as 
+\begin_inset Formula 
+\[
+L=P\left(k_{1},k_{2},\ldots,k_{n}|\theta\right)=P\left(k=k_{1}|\theta\right)\cdot P\left(k=k_{2}|\theta\right)\cdot\ldots\cdot P\left(k=k_{n}|\theta\right)
+\]
+
+\end_inset
+
+which (presuming independent events) is the probability of obtaining a specific
+ set of random variable values 
+\begin_inset Formula $k_{1},k_{2},\ldots,k_{n}$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+L=p^{n}\prod_{k=1}^{n}\left(1-p\right)^{k}
+\]
+
+\end_inset
+
+Consider now 
+\begin_inset Formula $\lambda=\ln L$
+\end_inset
+
+ and find its extremal value 
+\begin_inset Formula $\hat{p}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\lambda\left(p\right)=n\ln p+\ln\left[\left(1-p\right)^{n\bar{k}}\right]
+\]
+
+\end_inset
+
+where we used the mean 
+\begin_inset Formula $\sum_{k=1}^{n}k=n\bar{k}$
+\end_inset
+
+.
+ The condition for extremal values 
+\begin_inset Formula 
+\[
+\frac{\mathrm{d}\lambda\left(\hat{p}\right)}{\mathrm{d}\hat{p}}=0
+\]
+
+\end_inset
+
+then yields a maximum at 
+\begin_inset Formula 
+\[
+\hat{p}=\frac{\bar{k}}{\bar{k}+1}
+\]
+
+\end_inset
+
+which is the maximum likelihood estimate for the parameter 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+R source code
+\end_layout
+
+\begin_layout Standard
+Create a file
+\family typewriter
+ bloodtype.R
+\family default
+, set working directory via 
+\family typewriter
+setwd()
+\family default
+ command and call the script in R via 
+\family typewriter
+source(
+\begin_inset Quotes eld
+\end_inset
+
+bloodtype.R
+\begin_inset Quotes erd
+\end_inset
+
+)
+\family default
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{/../assessed.R}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+\begin_inset Note Note
+status open
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Plain Layout
+Cellular automata produce evolving patterns from initial conditions, combined
+ with (usually) simple replication rules.
+ They are usually defined on a rectangular grid consisting of cells such
+ that each cell takes a boolean value (on or off).
+ The rules usually specify how a given cell evolves in the next timestep:
+ Will it die, reproduce, or interact in yet a different way with its neighbors?
+ Unlike e.g.
+ boolean networks, cells interact only with close neighbors.
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+The
+\emph default
+ cellular automaton which launched the popularity of the field is Conway's
+ Game of Life.
+ This game defines rules for a cell to survive depending on how many neighbors
+ it has: Death occurs out of loneliness or overpopulation while reproduction
+ is possible given the right number of neighbors.
+\end_layout
+
+\begin_layout Plain Layout
+A large collection of cellular automata and many possible applications is
+ discussed by Stephen Wolfram in 
+\emph on
+A New Kind of Science
+\emph default
+.
+ Practical use is found, for example, in large random number generation
+ and a cellular automaton algorithm provides these for Wolfram's 
+\emph on
+Mathematica
+\emph default
+ software.
+\end_layout
+
+\begin_layout Plain Layout
+Here, we will discuss a game in the vein of the Game of Life, however with
+ altered rules.
+ The game, too, will be based on survival and reproduction of cells and
+ adds another layer through the relevance of food.
+ I would like to call this version 
+\emph on
+Cell of Life
+\emph default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The next section provides an overview of how the game works.
+ The structure of the program and the main ideas of the game are given in
+ connection with the most important variables and functions.
+ While the game's rules are only sketched out in the first section, the
+ full set of rules is given explicity section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Rules"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:main ideas"
+
+\end_inset
+
+Main Ideas of the Game
+\end_layout
+
+\begin_layout Plain Layout
+The initial conditions are given in a text file.
+ Its file name is given (and can be modified) through the preprocessor directive
+ 
+\family typewriter
+INITIAL_DATA_FILE
+\family default
+.
+ The contents of the file must obey the following format: 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{example_file.txt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The first two lines are header information.
+ The first line specifies the number of rows, the second line is the number
+ of columns.
+ These two lines are read their values are assigned to 
+\family typewriter
+int_rows
+\family default
+ and 
+\family typewriter
+int_cols
+\family default
+.
+ The following 
+\family typewriter
+int_rows
+\family default
+ lines must consist of 
+\family typewriter
+int_cols 
+\family default
+characters each.
+ A '.' represents an empty space (which is equivalent to a dead cell) and
+ a living cell is represented by '
+\family typewriter
+O
+\family default
+' (the letter capital Oh, not zero).
+ 
+\end_layout
+
+\begin_layout Quotation
+
+\family sans
+\series bold
+If this format is violated (even if the end of line marker is set a line
+ below), unexpected output or segmentation faults may burden the user.
+\end_layout
+
+\begin_layout Plain Layout
+A brief look into the update loop of the main program is instructive at
+ this point:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{main_structure.c}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+There are two two-dimensional arrays (we shall call them matrices) that
+ are of major importance: 
+\family typewriter
+cells
+\family default
+ and 
+\family typewriter
+food
+\family default
+.
+ The former is a two-dimensional character array, i.e.
+ it saves the '.' and '
+\family typewriter
+O
+\family default
+' information.
+ Therefore it is of dimensions 
+\family typewriter
+cells[int_rows][int_cols]
+\family default
+.
+ It is pivotal to this program since it both stores the positions and states
+ of cells, as well as being the primary output information.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+The other array, 
+\family typewriter
+food
+\family default
+, has the same dimensions as 
+\family typewriter
+cells
+\family default
+.
+ Every element of 
+\family typewriter
+food
+\family default
+ is initialised with an integer value which is controlled through the preprocess
+or directive 
+\family typewriter
+FOODSTART
+\family default
+.
+ This array represents the food resources which are eaten by the cells (at
+ a rate of 
+\family typewriter
+EATRATE
+\family default
+, according to rules specified in 
+\family typewriter
+still_alive
+\family default
+).
+ The food also regrows (at a rate of 
+\family typewriter
+GROWTHRATE
+\family default
+, specified in 
+\family typewriter
+regrow_food
+\family default
+).
+ Finally (and very importantly), if a cell cannot consume a specified amount
+ of food from a certain amount of neighboring fields, it dies.
+ This property suggests the name 
+\family typewriter
+still_alive
+\family default
+ for its controlling function.
+\end_layout
+
+\begin_layout Plain Layout
+Having dealt with consumption of food and death, the counter balance is
+ handled by the function 
+\family typewriter
+replicate
+\family default
+.
+ According to a breeding rule, the cell will replicate provided there is
+ enough food and space (i.e.
+ no other cell) at a neighboring field.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/allowedFields.pdf
+	scale 120
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Illustration-of-rules"
+
+\end_inset
+
+Illustration of food and breeding rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Rules"
+
+\end_inset
+
+The rules
+\end_layout
+
+\begin_layout Plain Layout
+Given a 
+\family typewriter
+cells
+\family default
+ matrix, the next timestep (i.e.
+ an update of 
+\family typewriter
+cells
+\family default
+ and 
+\family typewriter
+food
+\family default
+) is computed along the pattern 1) 
+\family typewriter
+stay_alive
+\family default
+, 2) 
+\family typewriter
+regrow_food
+\family default
+ and 3) 
+\family typewriter
+replicate
+\family default
+, as seen in the above excerpt of the main program.
+ The precise rules are:
+\end_layout
+
+\begin_layout Subsection*
+1) 
+\family typewriter
+stay_alive()
+\end_layout
+
+\begin_layout Plain Layout
+Let a given (living) cell eat and immediately check afterwards if it starves
+ (in which case it is killed: '.' 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+'
+\family typewriter
+O
+\family default
+').
+ 
+\emph on
+Then
+\emph default
+ move to the next cell, looping from the upper left corner to the lower
+ right.
+ Periodic boundary conditions are employed: If 
+\family typewriter
+i
+\family default
+ and 
+\family typewriter
+j
+\family default
+ are (integer) indices that are possibly out of bounds of 
+\family typewriter
+cells[int_rows][int_cols] 
+\family default
+and 
+\family typewriter
+food[int_rows][int_cols]
+\family default
+, new indices i_new and j_new are computed as
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+i_new = (i + int_rows) % int_rows
+\end_layout
+
+\begin_layout Plain Layout
+
+j_new = (j + int_cols) % int_cols
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+thus encorporating periodic boundary conditions
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The looping direction (upper left to lower right) comes with some arbitrary
+ flavour: The cells at the end of the loop are left with the least food
+ (eaten by the more fortunate cells with lower ij values).
+ 
+\end_layout
+
+\end_inset
+
+.
+ In order to survive, the cell must eat from 
+\emph on
+every 
+\emph default
+neighboring cell (see figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Illustration-of-rules"
+
+\end_inset
+
+).
+ As it consumes food units per iteration, it must eat precisely 
+\begin_inset Formula $9\cdot\mathtt{EATRATE}$
+\end_inset
+
+ food units per iteration.
+ The 
+\family typewriter
+food
+\family default
+ matrix is then updated.
+ In case one or several of the neighboring fields offer fewer than 
+\family typewriter
+EATRATE
+\family default
+ food units (so that the cell is doomed to die), it will have its 
+\emph on
+last suppe
+\emph default
+r and eat whatever it can before dying.
+ As a result, before a cell dies at least one of its neighbors will have
+ 0 food units.
+\end_layout
+
+\begin_layout Subsection*
+2) 
+\family typewriter
+regrow_food()
+\end_layout
+
+\begin_layout Plain Layout
+Only after 
+\family typewriter
+stay_alive 
+\family default
+has finished looping, 
+\emph on
+every 
+\emph default
+field in the 
+\family typewriter
+food
+\family default
+ matrix is increased by 
+\family typewriter
+GROWTHRATE
+\family default
+.
+\end_layout
+
+\begin_layout Subsection*
+3) 
+\family typewriter
+replicate()
+\end_layout
+
+\begin_layout Plain Layout
+After 
+\family typewriter
+regrow_food
+\family default
+ has finished looping, each (living) cell tries to breed.
+ Only four neighboring fields are relevant for breeding (again, see figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Illustration-of-rules"
+
+\end_inset
+
+).
+ For a given cell to breed either of the relevant neighbors, two conditions
+ must be met:
+\end_layout
+
+\begin_layout Enumerate
+There must not be another cell on that field (i.e.
+ it must be '.').
+ 
+\end_layout
+
+\begin_layout Enumerate
+The available food must be 
+\begin_inset Formula $\geq\mathtt{EATRATE}$
+\end_inset
+
+.
+ Note that this does not necessarily mean that the cell has sufficient food
+ to last at least one generation: Another cell treated earlier in the loop
+ (with lower ij indices) might eat that food first.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+If a cell meets these conditions at a relevant neighboring field, the offspring
+ will be marked with '
+\family typewriter
+N
+\family default
+' rather than '
+\family typewriter
+O
+\family default
+'.
+ Only after 
+\family typewriter
+replicate()
+\family default
+ has finished looping the '
+\family typewriter
+N
+\family default
+' are updated to '
+\family typewriter
+O
+\family default
+'.
+ This way, if an offspring cell is created it will not be mistaken for a
+ potential breeder a few iterations later.
+ Also, a breeder is never overridden by offspring.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+However, in the same sense in which 
+\family typewriter
+stay_alive()
+\family default
+ favours small indices in terms of food, 
+\family typewriter
+replicate()
+\family default
+ favours them in terms of breeding space.
+ Once again we arrive at the principle of 
+\end_layout
+
+\begin_layout Verse
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "40text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+\emph on
+The fittest index
+\series default
+\emph default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+If your i and j are low
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+To the next round you may go
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+If your indices are high
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+It is likely you will die
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+Is your offspring also trapped?
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+Not if periodically remapped.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+User input and control
+\end_layout
+
+\begin_layout Plain Layout
+The program should be compiled and run (without command line arguments!)
+ as
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+$ gcc -o game cellular_game.c
+\end_layout
+
+\begin_layout Plain Layout
+
+$ /.game
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+Apart from providing a correctly formated input file (see section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:main ideas"
+
+\end_inset
+
+), the user should only specify the preprocessor directives.
+ These are given at the top of the program and are always entirely uppercase
+ (unlike runtime variables which start lowercase and specify the data type
+ in the file name).
+ The game parameters 
+\family typewriter
+FOODSTART
+\family default
+, 
+\family typewriter
+EATRATE
+\family default
+ and 
+\family typewriter
+GROWTHRATE
+\family default
+ have been discussed above and 
+\family typewriter
+INITIAL_DATA_FILE
+\family default
+ and 
+\family typewriter
+ITERATIONS
+\family default
+ should be self-explanatory.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+If the food matrix is supposed to be displayed next to the cells matrix
+ (which is an excellent debugging tool), set 
+\family typewriter
+PRINTFOOD
+\family default
+ to 1.
+ If you prefer an animation rather than top-down console output, set 
+\family typewriter
+ANIMATE
+\family default
+ to 1 and specify the pause between frames in 
+\family typewriter
+PAUSEANIMATION
+\family default
+ in microseconds.
+ For both 
+\family typewriter
+PRINTFOOD
+\family default
+ and 
+\family typewriter
+ANIMATE
+\family default
+, choose any other integer value to turn off the functionality.
+\end_layout
+
+\begin_layout Section
+Analysis
+\end_layout
+
+\begin_layout Subsubsection*
+Dependence on initial conditions
+\end_layout
+
+\begin_layout Plain Layout
+The parameter space of the game is huge: Apart from relevant game integer
+ parameters (
+\family typewriter
+FOODSTART
+\family default
+, 
+\family typewriter
+EATRATE
+\family default
+, 
+\family typewriter
+GROWTHRATE
+\family default
+) the initial conditions add to the complexity in an enormous way.
+ We know from the study of dynamical systems even a seemingly simple discrete
+ map like 
+\begin_inset Formula $x_{n+1}=a\, x_{n}\left(x_{n}-1\right)$
+\end_inset
+
+ can have a multitude of attractors (i.e.
+ values to which 
+\begin_inset Formula $x_{n}\rightarrow\infty$
+\end_inset
+
+ tends) and a meaningful parameter analysis of a hugely complex system as
+ the game is very challenging.
+ However, we can start by looking for typical properties of (highly nonlinear)
+ dynamical systems: For example, its 
+\emph on
+dependence on initial conditions
+\emph default
+.
+ The following example features 
+\family typewriter
+EATRATE 
+\family default
+a
+\family typewriter
+nd GROWTHRATE
+\family default
+ that are rather close to each other, causing a sensitive shortage of food.
+ In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Sensitive-initial-conditions."
+
+\end_inset
+
+, the evolution of the population is plotted over the iteration step.
+ In this simulation, we choose three cells as an initial condition and run
+ two simulations.
+ The only difference is the position of the three cells, as shown in the
+ figure.
+ Otherwise, all parameters are the same.
+ We observe that after some rather wild oscillations, depending on the initial
+ conditions provided, the population either keeps oscillating around a stable
+ value or ends up extinct.
+ 
+\emph on
+We have very high sensitivity on initial conditions.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/sensitive_conditions.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Sensitive-initial-conditions."
+
+\end_inset
+
+Sensitive initial conditions.
+ This simulation was run on a 20 by 20 grid with 
+\family typewriter
+FOODSTART = 5
+\family default
+, 
+\family typewriter
+EATRATE = 2
+\family default
+, 
+\family typewriter
+GROWTHRATE = 3
+\family default
+ and initial conditions as in the figure.
+ To reproduce this output, look at the preprocessor directives 
+\family typewriter
+SENSITIVE_EXTINCT
+\family default
+ and 
+\family typewriter
+SENSITIVE_SURVIVES
+\family default
+ in the code.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Ratio between food growth and consumption rate
+\end_layout
+
+\begin_layout Plain Layout
+With the simple initial condition of only one cell in the middle of a 
+\begin_inset Formula $20\times20$
+\end_inset
+
+ grid, it would be reasonable to see what happens if the ratio 
+\family typewriter
+GROWTHRATE / EATRATE
+\family default
+ is driven up: One would expect that the more food regrows (compared to
+ its consumption), the more likely it is for the population to find an equilibri
+um at an increasing population number.
+ To some extent, this does happen in simulation.
+ An example is provided in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ratio"
+
+\end_inset
+
+.
+ A simulation with simple initial conditions (and similar to the sensitive
+ initial conditions example above) is run with increasing
+\family typewriter
+ GROWTHRATE
+\family default
+ vs 
+\family typewriter
+EATRATE
+\family default
+ (
+\family typewriter
+G / E
+\family default
+) ratios.
+ As expected, the average population ratios increase pretty much linearly
+ with 
+\family typewriter
+G / E
+\family default
+ ratio.
+ But the oscillations get stronger, too, suggesting an unstable equilibrium.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/growthEatRatios.pdf
+	scale 120
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ratio"
+
+\end_inset
+
+Analysis of the ratio of 
+\family typewriter
+GROWTHRATE
+\family default
+ vs 
+\family typewriter
+EATRATE
+\family default
+.
+ The simulations were run with similar values to 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Sensitive-initial-conditions."
+
+\end_inset
+
+: A 20 by 20 grid with 
+\family typewriter
+FOODSTART = 5
+\family default
+ and initial conditions as in the image.
+ To reproduce these results, look for preprocessor directive 
+\family typewriter
+RATIOS
+\family default
+ in the code.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusions
+\end_layout
+
+\begin_layout Plain Layout
+The Cell of Life is an intriguing game with remarkable complexity following
+ from its (admittedly not too simple) survival and replication rules.
+ The C program here provides a modular and well structured framework that
+ can easily be picked up.
+ The framework is efficient due to minimal waste of memory resources (all
+ information is encoded in an integer and a character array).
+ It is also flexible since it reads from text files and allocates memory
+ dynamically.
+ As a result, further investigations can be made easily by providing text
+ files which in themselves are a kind of log and documentation.
+ Further rules can be added as routines, extending the 
+\family typewriter
+still_alive
+\family default
+, 
+\family typewriter
+regrow_food
+\family default
+ and 
+\family typewriter
+replicate 
+\family default
+cycle.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+There is a consequent and easy to implement improvement (which the author
+ has no more time to implement and properly test).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+At the current stage, the evolution of the population number is written
+ into a textfile 
+\family typewriter
+POPULATIONFILE
+\family default
+ by the function 
+\family typewriter
+write_population
+\family default
+.
+ Easily, this output could be expanded to contain more information: In fact,
+ the 
+\emph on
+complete set
+\emph default
+ of data relating to a simulation (matrix dimensions, 
+\family typewriter
+FOODSTART
+\family default
+, 
+\family typewriter
+GROWTHRATE
+\family default
+ and 
+\family typewriter
+EATRATE
+\family default
+ and 
+\family typewriter
+cells[][]
+\family default
+ and the population evolution.
+ That's it.).
+ This way, the result of a simulation would be documented a single file,
+ making the program a better tool to systematically study the Cells of Life.
+ If the information is placed in an intelligent order (i.e.
+ 
+\family typewriter
+cells[][]
+\family default
+ followed by population evolution), Matlab's 
+\family typewriter
+importfile
+\family default
+ command will read it correctly by default.
+\end_layout
+
+\begin_layout Section
+C source code
+\end_layout
+
+\begin_layout Plain Layout
+Avoiding too long lines in the C code in order not to mess with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+LaTeX
+\end_layout
+
+\end_inset
+
+ 
+\family typewriter
+
+\begin_inset space ~
+\end_inset
+
+verbinput
+\family default
+ command.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{/../cellular_game.c}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Section*
+What 
+\family typewriter
+SchroedingerSolver
+\family default
+ does...
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+SchroedingerSolver
+\family default
+ computes numerical solutions of 
+\noun on
+Schrödinger
+\noun default
+'s equation for the stationary case (i.e., no time dependency).
+ You can feed an arbitrary one-dimensional potential into the solver, along
+ with information about the observed interval and discretization.
+ The program interpolates the potential and solves Schrödinger's equation
+ numerically in order to obtain an arbitrary number of wave functions, as
+ well as their corresponding energy levels.
+ All of the results are broken up in output files which can easily be displayed
+ graphically.
+ Additionally, a Matlab routine is provided for the purpose of obtaining
+ a neat plot of the results.
+ The program SchroedingerSolver is written entirely in Fortran and uses
+ several 
+\family typewriter
+LAPACK
+\family default
+ routines.
+\end_layout
+
+\begin_layout Section*
+Prequisites
+\end_layout
+
+\begin_layout Plain Layout
+In order to compile 
+\family typewriter
+SchroedingerSolver
+\family default
+, you will require a 
+\family typewriter
+FORTRAN
+\family default
+ compiler.
+ 
+\family typewriter
+LAPACK
+\family default
+ and 
+\family typewriter
+BLAS
+\family default
+ are also required, as some of their routines are called from within the
+ program.
+ The program was written on Ubuntu 8.04 LTS (
+\begin_inset Quotes eld
+\end_inset
+
+Hardy Heron
+\begin_inset Quotes erd
+\end_inset
+
+) using the 
+\family typewriter
+gfortran
+\family default
+ compiler.
+ In order to install the necessary packages from the Ubuntu repositories,
+ repeat the following steps:
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sudo apt-get install gfortran
+\family default
+ will take care of the 
+\family typewriter
+gfortran
+\family default
+ compiler
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sudo apt-get install liblapack-dev
+\family default
+ is a package which is essential for the linking process.
+ Installing it will take care of all necessary dependencies.
+ Note that 
+\family typewriter
+liblapack
+\family default
+ allone won't work, it will install the libraries, but linking will remain
+ impossible.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sudo apt-get install bzr
+\family default
+ is optional as you can simpliy compile the files from the project homepage.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sudo apt-get install grace
+\family default
+ will install the graphical tool 
+\family typewriter
+xmgrace
+\family default
+ which you need for make-testing the program
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sudo apt-get install doxygen
+\family default
+ for creating source code documentation files (latest stable version for
+ Ubuntu 8.04 is <1.5.6, so no 
+\family typewriter
+FORTRAN
+\family default
+ optimization!).
+ Simply navigate to the branch's main folder and call 
+\family typewriter
+$ doxygen
+\family default
+.
+ Note: this has not been tested sufficiently: HTML and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+LaTeX 
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset space ~
+\end_inset
+
+documentation may not contain all of the documentation which is available
+ in the f90 source code files.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Subsubsection*
+How to get the branch
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+bzr branch lp:schroedingersolver
+\family default
+ will download the main bazaar branch (provided that bazaar has been installed
+ according to step 3).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Compile and execute
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+$ make
+\family default
+ does all the compiling and linking.
+ In order to run the program, a 
+\family typewriter
+schrodinger.inp 
+\family default
+file needs to be specified.
+ make can take care of that, too.
+ Simply call make 
+\family typewriter
+$ load_pottopf
+\family default
+, 
+\family typewriter
+$ make load_pottopf2
+\family default
+, 
+\family typewriter
+make load_pottopf3
+\family default
+, or 
+\family typewriter
+$ make load_harmOszi
+\family default
+, and an example schrodinger.inp file will be created (see input/output section
+ for more information on these examples).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+Apart from the typical 
+\family typewriter
+clean
+\family default
+/
+\family typewriter
+realclean
+\family default
+ stuff, there are several more things 
+\family typewriter
+make
+\family default
+ can do.
+ Once a schrodinger.inp file is available, you can compile the whole program
+ and execute it with one command:
+\family typewriter
+ $ make solveSGL
+\family default
+.
+ And finally, the results of the above examples can be plotted with a make
+ command (the graphical tool will be 
+\family typewriter
+xmgrace
+\family default
+, see prequisites section).
+ For these plotting commands, consult the input/output section.
+\end_layout
+
+\begin_layout Section*
+User input - editing the 
+\family typewriter
+schrodinger.inp
+\family default
+ file
+\end_layout
+
+\begin_layout Plain Layout
+The user input is done entirely in the 
+\family typewriter
+schrodinger.inp
+\family default
+ file.
+ Here's the main frame of the file.
+ If the user input is incorrect, the program will stop and refer to the
+ very line where the problem occured.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Example user input file 
+\family typewriter
+schrodinger.inp
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+2.0                        # mass 
+\end_layout
+
+\begin_layout Plain Layout
+
+-2.0   2.0   1999          # xMin xMax nPoint 
+\end_layout
+
+\begin_layout Plain Layout
+
+xMin   xMax  nPoint 1 15   # firstEigVal    lastEigVal
+\end_layout
+
+\begin_layout Plain Layout
+
+linear                     # interpType
+\end_layout
+
+\begin_layout Plain Layout
+
+6                          # nInterp
+\end_layout
+
+\begin_layout Plain Layout
+
+-2.0   0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+-0.5   0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+-0.5   -10.0  
+\end_layout
+
+\begin_layout Plain Layout
+
+0.5    -10.0  
+\end_layout
+
+\begin_layout Plain Layout
+
+0.5    0.0  
+\end_layout
+
+\begin_layout Plain Layout
+
+2.0    0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Some explainations
+\end_layout
+
+\begin_layout Plain Layout
+The user provides an interval [
+\family typewriter
+xMin
+\family default
+, 
+\family typewriter
+xMax
+\family default
+] on which a discretization is to be computed.
+ The length of one interval of discrtization (from here on called 
+\family typewriter
+delta
+\family default
+) is
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+                      delta=(xMax - xMin)/(nPoint-1)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+As already mentioned in the introduction, one of the most important features
+ of the program is to interpolate the potential which is provided by the
+ user (in the shape of the 
+\begin_inset Formula $x,\, y$
+\end_inset
+
+ coordinates of 
+\family typewriter
+nInterp
+\family default
+ interpolation points).
+ The interpolation type 
+\family typewriter
+interpType
+\family default
+ can either be the string 
+\family typewriter
+'linear'
+\family default
+ or 
+\family typewriter
+'polynomial'
+\family default
+ (a string which does not begin with either 
+\family typewriter
+linear
+\family default
+ or 
+\family typewriter
+polynomial
+\family default
+ will cause an error and terminate the program).
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Another feature of the program is the calculation of the eigenvalues and
+ the eigenvectors of the Hamiltonian.
+ The Hamiltonian can be expressed as a tridiagonal matrix (see [
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "the:spezifikation"
+
+\end_inset
+
+] for its explicit form and some more mathematical explainations).
+ If the Hamiltonians dimensions are 
+\family typewriter
+nPoint
+\family default
+ 
+\begin_inset Formula $\times$
+\end_inset
+
+ 
+\family typewriter
+nPoint
+\family default
+, the 
+\family typewriter
+LAPACK
+\family default
+ routine 
+\family typewriter
+dsteqr
+\family default
+ which is used for eigenvalue/eigenvector computation will return 
+\family typewriter
+nPoint
+\family default
+ eigenvalues.
+ Naturally, you wouldn't want all of the eigenvalues and the corresponding
+ eigenfunctions to be saved.
+ Those for saving are determined by 
+\family typewriter
+firstEigValue
+\family default
+ and 
+\family typewriter
+lastEigValue
+\family default
+, first being the smallest.
+\end_layout
+
+\begin_layout Section*
+Input/output examples
+\end_layout
+
+\begin_layout Plain Layout
+All of the below plots have been created with the 
+\family typewriter
+MATLAB
+\family default
+ script importfile.
+ But why are there two plots accompanying each example? What 
+\family typewriter
+schroedinverSolver
+\family default
+ does, in a nutshell, is computing the discretization of the user-given
+ potential and writing it into a file (discrpot.dat), and then use this file
+ in order to compute the eigenvalues/eigenvectors of the 
+\begin_inset Formula $H\Psi=E\Psi$
+\end_inset
+
+ system, and write those of them into a corresponding file (wfuncs.dat and
+ ewfuncs.dat, respectively).
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The first part, writing discrpot.dat, is always done by 
+\family typewriter
+schroedingerSolver
+\family default
+.
+ But the second part can rather easily be done by 
+\family typewriter
+MATLAB
+\family default
+ as well, provided that discrpot.dat and 
+\family typewriter
+schrodinger.inp
+\family default
+ are available.
+ So the pair of plots which goes with each example shows the very same discretiz
+ation of the potential (originating in discrpot.dat), but different eigenvalues/e
+igenvectors, computed by 
+\family typewriter
+schroedingerSolver
+\family default
+ (left plot) and 
+\family typewriter
+MATLAB
+\family default
+ (right plot).
+ The 
+\family typewriter
+MATLAB
+\family default
+ routine importfile which creates the pair of plots was used for debugging
+ purposes in the course of the development.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+But if 
+\family typewriter
+MATLAB
+\family default
+ is not available or not desired (or both), the very same plots can be created
+ using xmgrace very easily.
+ The following commands will do the job: 
+\family typewriter
+make plot_discrpot
+\family default
+ for for plotting discrpot.dat, 
+\family typewriter
+make plot_wfuncs
+\family default
+ for the eigenvectors on their own and 
+\family typewriter
+make plot_ewfuncs 
+\family default
+for the the sum of eigenvalue and corresponding eigenvector.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsubsection*
+Example 1: infinite potential well
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{/../potentialtopf.inp.example}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{pot1.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pot1.eps
+	lyxscale 10
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{psfrags}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Commands to create this
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make load_pottopf
+\end_layout
+
+\begin_layout Plain Layout
+
+./schroedingerSolver
+\end_layout
+
+\begin_layout Plain Layout
+
+cd documentation
+\end_layout
+
+\begin_layout Plain Layout
+
+MATLAB >> importfile
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+For 
+\family typewriter
+xmgrace
+\family default
+ plots, see instructions above.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsubsection*
+Example 2: finite potential well
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{/../potentialtopf2.inp.example}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{pot2.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pot2.eps
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{psfrags}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Commands to create this
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make load_pottopf2
+\end_layout
+
+\begin_layout Plain Layout
+
+./schroedingerSolver
+\end_layout
+
+\begin_layout Plain Layout
+
+cd documentation
+\end_layout
+
+\begin_layout Plain Layout
+
+MATLAB >> importfile
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+For 
+\family typewriter
+xmgrace
+\family default
+ plots, see instructions above.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Example 3: harmonic oscillator potential
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{/../harmoszi.inp.example}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{harmOsc.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename harmOsc.eps
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{psfrags}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Commands to create this
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make load_harmOszi
+\end_layout
+
+\begin_layout Plain Layout
+
+./schroedingerSolver
+\end_layout
+
+\begin_layout Plain Layout
+
+cd documentation
+\end_layout
+
+\begin_layout Plain Layout
+
+MATLAB >> importfile
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+For 
+\family typewriter
+xmgrace
+\family default
+ plots, see instructions above.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Example 3: double potential well
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+verbinput{/../potentialtopf3.inp.example}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{pot3.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pot3.eps
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{psfrags}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Commands to create this
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make
+\end_layout
+
+\begin_layout Plain Layout
+
+$ make load_pottopf3
+\end_layout
+
+\begin_layout Plain Layout
+
+./schroedingerSolver
+\end_layout
+
+\begin_layout Plain Layout
+
+cd documentation
+\end_layout
+
+\begin_layout Plain Layout
+
+MATLAB >> importfile
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+For 
+\family typewriter
+xmgrace
+\family default
+ plots, see instructions above.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+A few notes, hints, remarks, and sort of an outlook
+\end_layout
+
+\begin_layout Plain Layout
+A programming project may have, roadmaps, release dates, hand-in dates etc.,
+ but it can never be finished.
+ There are a couple of things which would certainly be worth doing.
+ A lot of interesting things can be found in the documentation of the repositori
+es.
+ For example, editing the schrodinger.inp file in the editor kate caused
+ a lot of trouble until the problem was discovered: kate sometimes suppresses
+ a line terminator close to the end of a file, which e.g.
+ emacs or gedit don't (see [
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "the:de_comp_fortran_discussion"
+
+\end_inset
+
+] for comp.lang.fortran discussion).
+ Another interesting journey was the so called cherrypick-merge which bazaar
+ is able to perform, but which is not documented as a merge in the repository
+ and which is therefore withdrawn from the bzr help merge page, but which
+ nevertheless works perfectly well (this is discussed in greater detail
+ in revno 13, also see [
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "the:bzr_help_merge_bug_report"
+
+\end_inset
+
+]).
+ And last, but certainly not least, for the purpose of dealing with unsorted
+ interpolation points given by the user, and algorithm was developed which
+ the author is especially proud of (discussed in detail in revno 15) and
+ which is somewhat similar to Newton's pendulum.
+ All of this would have been a pleasure to discuss and to illustrate in
+ this documentation, and certainly there are spots where the source code
+ might shortened, generalized, modularized, documented more extensively
+ or more concisely, but our experience is that source code is always 
+\emph on
+not quite perfect
+\emph default
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "aradi"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "the:spezifikation"
+
+\end_inset
+
+Bálint Aradi: Projektspezifikation – Abschlussprojekt für Wissenschaftliches
+ Programmieren.
+ contained in the repository.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "the:de_comp_fortran_discussion"
+
+\end_inset
+
+Alexander Erlich: 
+\emph on
+How to read the last line before the EOF is reached?
+\emph default
+ discussion in 
+\series bold
+comp.lang.fortran
+\series default
+ started on 09.09.2009, see 
+\begin_inset Newline newline
+\end_inset
+
+
+\size small
+\bar under
+\color blue
+http://groups.google.com/group/comp.lang.fortran/browse_thread/thread/cc3157a233bf2d
+46#
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "the:bzr_help_merge_bug_report"
+
+\end_inset
+
+John A Meinel: 
+\emph on
+'bzr help merge' should describe merging a single file
+\emph default
+.
+ Launchpad bug report #81758, see
+\begin_inset Newline newline
+\end_inset
+
+
+\size small
+\bar under
+\color blue
+ https://bugs.launchpad.net/bzr/+bug/81758
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
