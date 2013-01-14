@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataManagementPlan xmlns="http://www.miidi.org/dmp"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://miidi.org/miidi http://www.miidi.org/schema"
+                    schemaVersion="0.1"
+                    dateVersion="2012-04-30">
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            <personalProjectInformation>
+        
+        
+        
+    <personalInformation>
+            
+            
+            
+            
+        <FamilyName>Ang, Brooks-Bartlett, Erlich, Mbewu, Ross</FamilyName>
+   <GivenName>Jackie, Jonathan, Alexander, James, Robert</GivenName>
+   <deparment>Doctoral Training Centre, University of Oxford</deparment>
+   <researchSupervisor>Sophie Kershaw</researchSupervisor>
+  </personalInformation>
+  <projectInformation>
+            
+            
+            
+            
+        <researchProjectTitle>OSTI Cancer Modeling</researchProjectTitle>
+   <projectStartDate>10012013</projectStartDate>
+   <studentship>
+                
+                
+            <studentshipIdentifier/>
+    <FundingAgencyStudentship/>
+   </studentship>
+   <grant>
+                
+                
+            <fundingAgencyName/>
+    <grantNumber/>
+   </grant>
+  </projectInformation>
+  <DataManagementPlan>
+            
+            
+            
+        <title>OSTI Group C Cancer Modeling</title>
+   <creationDate>14012013</creationDate>
+   <versionNumber>1.0</versionNumber>
+  </DataManagementPlan>
+ </personalProjectInformation>
+ <natureData>
+        
+        
+    <natureData>
+            
+            
+            
+            
+        <subjectDiscipline>Cancer Modelling, Matlab Programming</subjectDiscipline>
+   <exactNatureData>Cellular Automaton, Differential Equations and their Solutions, Tumour modelling considering glucose input and acid output</exactNatureData>
+   <dataFormat>M files, pdf, LaTeX documents</dataFormat>
+   <dataOwnership>Jackie Ang, Jonathan Brooks-Bartlett, Alexander Erlich, Robert Ross, James Mbewu</dataOwnership>
+  </natureData>
+  <dataDescriptions>
+            
+            
+        <DescriptionType>Within the code there will be many comments. </DescriptionType>
+   <metadataCaptureMethod/>
+  </dataDescriptions>
+ </natureData>
+ <dataSharingPublication>
+        
+        
+    <dataSharing>
+            
+        <dataSharingPrePublication>Any group that takes over the project and the general public. </dataSharingPrePublication>
+  </dataSharing>
+  <DataPublication>
+            
+            
+            
+            
+            
+        <embargoDuration>N.A</embargoDuration>
+   <reasonRestrictionAccess>It isn't</reasonRestrictionAccess>
+   <dataSharingLicense>CC-BY 3.0</dataSharingLicense>
+   <persistentIdentifier>Citation identifiers are provided within the code within the GNU public license as well as within the report. </persistentIdentifier>
+   <metadataProvision>Comments within all code and the report.</metadataProvision>
+  </DataPublication>
+ </dataSharingPublication>
+ <dataStorageBackupArchiving>
+        
+        
+    <DataStorageBackup>
+            
+            
+            
+        <shortTermStorage>Github Repository</shortTermStorage>
+   <personResponsible>James Mbewu</personResponsible>
+   <backupFrequency>Daily</backupFrequency>
+  </DataStorageBackup>
+  <DataArchiving>
+            
+            
+            
+            
+        <archiveLocation>Github Repository</archiveLocation>
+   <secureArchiveDate>Already there.</secureArchiveDate>
+   <personResponsible>James Mbewu</personResponsible>
+   <methodDataTransfer>N.A</methodDataTransfer>
+  </DataArchiving>
+ </dataStorageBackupArchiving>
+ <FutureDataManagement>
+        
+    <futurePersonResponsible>Group who takes over this data set.</futurePersonResponsible>
+ </FutureDataManagement>
+</DataManagementPlan>
