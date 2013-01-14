@@ -1,13 +1,39 @@
-function varargout = double_pendulum_GUI(varargin)
-% DOUBLE_PENDULUM_GUI MATLAB code for double_pendulum_GUI.fig
-%      DOUBLE_PENDULUM_GUI, by itself, creates a new DOUBLE_PENDULUM_GUI or raises the existing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% OstiCancerC - Code to reproduce results of "Patel et al. (2001) A 
+% Cellular Automaton Model of Early Tumor Growth and Invasion*: The 
+% Effects of Native Tissue Vascularity and Increased Anaerobic
+% Tumor Metabolism" simulating cancer growth using a hybrid cellular 
+% automaton model.
+%
+% Copyright (C) 2013  Jackie Ang, Jonny Brook-Bartlett, Alexander Erlich,
+% James Mbewu and Robert Ross.
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function varargout = cancerModelGUI(varargin)
+% cancerModelGUI MATLAB code for cancerModelGUI.fig
+%      cancerModelGUI, by itself, creates a new cancerModelGUI or raises the existing
 %      singleton*.
 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @double_pendulum_GUI_OpeningFcn, ...
-                   'gui_OutputFcn',  @double_pendulum_GUI_OutputFcn, ...
+                   'gui_OpeningFcn', @cancerModelGUI_OpeningFcn, ...
+                   'gui_OutputFcn',  @cancerModelGUI_OutputFcn, ...
                    'gui_LayoutFcn',  [] , ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -21,18 +47,18 @@ else
 end
 % End initialization code - DO NOT EDIT
 
-% --- Executes just before double_pendulum_GUI is made visible.
-function double_pendulum_GUI_OpeningFcn(hObject, eventdata, handles, varargin)
+% --- Executes just before cancerModelGUI is made visible.
+function cancerModelGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 
 handles.stop = false;
 
-% Choose default command line output for double_pendulum_GUI
+% Choose default command line output for cancerModelGUI
 handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
 
-function varargout = double_pendulum_GUI_OutputFcn(hObject, eventdata, handles) 
+function varargout = cancerModelGUI_OutputFcn(hObject, eventdata, handles) 
 
 varargout{1} = handles.output;
 
@@ -124,7 +150,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 function run_button_Callback(hObject, eventdata, handles)
-% RUN_BUTTON_CALLBACK Runs double pendulum animation.
+% RUN_BUTTON_CALLBACK Runs cancer model animation.
 %
 clc;
 %% Define all of the main variables
@@ -216,16 +242,12 @@ for k = 1:cancervariable.noofogenerations
     cancervariable.radiusOfGyration(k) = radiusOfGyration(cancervariable);
     axes(handles.tumorsize);
     plot(1:k,cancervariable.radiusOfGyration(1:k));
-    
+        
 end
-    %axes(handles.stateMatrixAxes);
-    %plotStateMatrix(cancervariable);
-    
-%     axes(handles.glucoseAxes);
-%     plotGlucoseMatrix(cancervariable);
-%       
-%     axes(handles.pHAxes);
-%     plotPHMatrix(cancervariable);
+
+
+
+%growthRates(m) = growthRate;
       
     
 
@@ -619,3 +641,12 @@ function edit23_CreateFcn(hObject, eventdata, handles)
 function edit22_CreateFcn(hObject, eventdata, handles)
 
 
+
+
+% --- Executes during object creation, after setting all properties.
+function tumorsize_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to tumorsize (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate tumorsize

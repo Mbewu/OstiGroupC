@@ -1,3 +1,29 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% OstiCancerC - Code to reproduce results of "Patel et al. (2001) A 
+% Cellular Automaton Model of Early Tumor Growth and Invasion*: The 
+% Effects of Native Tissue Vascularity and Increased Anaerobic
+% Tumor Metabolism" simulating cancer growth using a hybrid cellular 
+% automaton model.
+%
+% Copyright (C) 2013  Jackie Ang, Jonny Brook-Bartlett, Alexander Erlich,
+% James Mbewu and Robert Ross.
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function [ ] = RunAndVisualiseCancerSimulation()
 %% First draft code to set up the initial matrix 
 % This code is a first attempt at setting up the initial matrix required
@@ -6,10 +32,13 @@ function [ ] = RunAndVisualiseCancerSimulation()
 %% Section 1: Defining the variables for the problem
 
 
-phi = [0.02 0.06 0.10 0.14 0.18];
-growthRates = zeros(5,1);
+phi = 0.01*ones(6,1);
+%phi = [0.02 0.06 0.10 0.14 0.18];
+HA = [5e-5] ;
+%growthRates = zeros(length(phi),1);
+growthRates = zeros(length(HA),1);
 
-for m = 1:5
+for m = 1:length(growthRates)
 
 cancervariable.matrixrownumber = 100; % number of rows for the cellular automaton grid
 cancervariable.matrixcolnumber = 100; % number of columns for the cellular automaton grid
@@ -42,7 +71,7 @@ cancervariable.D_H = 1.08e-5; %(centimetres^2 / s)
 cancervariable.hr = zeros(7,1);
 cancervariable.hr(2) = 0; % empty k
 cancervariable.hr(3) = 0; % normal k
-cancervariable.hr(4)= 8.00e-5; % activetumor k (1/s)
+cancervariable.hr(4)= 5.0e-5; % activetumor k (1/s)
 cancervariable.hr(5) = 5e-7; % quiescenttumor
 cancervariable.hr(6) = 0; % quiescentnormal
 cancervariable.hr(7) = 0; % empty tumor k
@@ -51,7 +80,7 @@ cancervariable.H_S = 3.98e-5; % (mM)
 
 %cellular auto
 
-cancervariable.noofogenerations = 40;
+cancervariable.noofogenerations = 20;
 cancervariable.currentgeneration = 1;
 cancervariable.GdN = 2.5; %mM
 cancervariable.GdT = 2.5; %mM
@@ -61,10 +90,10 @@ cancervariable.pHqN = 7.1; % 7.1
 cancervariable.pHqT = 6.4; % 6.4
 cancervariable.radiusOfGyration = zeros(cancervariable.noofogenerations,1);
 
-cancervariable.f = 0.2;
+cancervariable.f = 0.25;
 
 cancervariable.vesseldensity = phi(m); % gives the density of the vessels in the cellular automaton grid
-
+cancervariable.hr(4) = HA(m);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +107,7 @@ cancervariable.glucosematrix = findGlucoseMatrix(cancervariable);
 cancervariable.pHmatrix = findPHMatrix(cancervariable);
 
 %Show the state matrix
-visualise(cancervariable);
+%visualise(cancervariable);
 
 %plotGlucoseMatrix(cancervariable);
 %plotPHMatrix(cancervariable);
@@ -89,9 +118,9 @@ growthRates(m) = growthRate;
 end
 
 figure;
-plot(phi,growthRates);
+plot(HA,growthRates);
 title('growth rate vs vessel density');
-phi
+HA
 growthRates
 
 %plotGlucoseMatrix(cancervariable);

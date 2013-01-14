@@ -24,21 +24,14 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [ ] = visualise( cancervariable , handles)
-%UNTITLED2 Summary of this function goes here
+function [ ] = plotRadiusOfGyration( cancervariable,generationNo)
+%UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
-figure;
-%subplot(1,3,1);
-plotStateMatrix(cancervariable, handles);
-figure;
-%subplot(1,3,2);
-plotGlucoseMatrix(cancervariable, handles);
-figure;
-%subplot(1,3,3);
-plotPHMatrix(cancervariable, handles);
-
-
+plot(1:generationNo,cancervariable.radiusOfGyration(1:generationNo));
+title(['Radius of Gyration at Generation ' num2str(cancervariable.currentgeneration)]);
+xlabel('Generation no.')
+ylabel('Radius of Gy (cm)');
 
 end
 
