@@ -30,7 +30,7 @@ function [ ] = plotPHMatrix( cancervariable )
 
 imagesc(cancervariable.pHmatrix)
 caxis([min(min(cancervariable.pHmatrix)) max(max(cancervariable.pHmatrix))])
-title(['PH at generation ' num2str(cancervariable.currentgeneration)]);
+title(['pH at generation ' num2str(cancervariable.currentgeneration)]);
 colorbar
 
 
