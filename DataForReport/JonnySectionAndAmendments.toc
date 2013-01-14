@@ -1,0 +1,17 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Methods }{2}{chapter.2}
+\contentsline {section}{\numberline {2.1}Setup of Cellular Automaton }{2}{section.2.1}
+\contentsline {section}{\numberline {2.2}Rules of Cellular Automaton}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Running the Simulation}{4}{section.2.3}
+\contentsline {section}{\numberline {2.4}The GUI}{4}{section.2.4}
+\contentsline {section}{\numberline {2.5}Glucose Inversion Problem}{5}{section.2.5}
+\contentsline {section}{\numberline {2.6}Vessel Boundary Conditions}{6}{section.2.6}
+\contentsline {section}{\numberline {2.7}Numerical Approach}{6}{section.2.7}
+\contentsline {section}{\numberline {2.8}Inversion Algorithm for the Glucose Matrix}{8}{section.2.8}
+\contentsline {section}{\numberline {2.9}Acid Profile}{8}{section.2.9}
+\contentsline {section}{\numberline {2.10}Calculating Tumour Size and Growth Rate}{9}{section.2.10}
+\contentsline {chapter}{\numberline {3}Results}{10}{chapter.3}
+\contentsline {chapter}{\numberline {4}Discussion}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Problems Faced with Original Paper and Differences}{13}{section.4.1}
+\contentsline {section}{\numberline {4.2}Biological Significance and Future Work}{14}{section.4.2}

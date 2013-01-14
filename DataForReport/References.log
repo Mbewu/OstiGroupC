@@ -1,0 +1,56 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdftex 2012.10.26)  14 JAN 2013 17:12
+entering extended mode
+**//gemini/brooks-bartlett/Documents/SysBio*DTC*yr*1/MATLAB/Projects/Cancer/Rob
+VersionReport/References.bib
+
+("//gemini/brooks-bartlett/Documents/SysBio DTC yr 1/MATLAB/Projects/Cancer/Rob
+VersionReport/References.bib"
+Overfull \hbox (12.32945pt too wide) in paragraph at lines 1--14
+\tenrm doi = "10.1006/jtbi.2001.2385", url = "http://www.sciencedirect.com/scie
+nce/article/pii/S0022519301923859",|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\tenrm d
+.\tenrm o
+.\tenrm i
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\tenrm =
+.etc.
+
+
+Overfull \hbox (1.1209pt too wide) in paragraph at lines 26--36
+[]\tenrm @Articleroz, Au-thor="Rozhin, J. and Sameni, M. and Ziegler, G. and Sl
+oane, B. F. ", Ti-tle="Pericellular|
+
+\hbox(6.94444+1.94444)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm @
+.\tenrm A
+.\tenrm r
+.\tenrm t
+.etc.
+
+
+Overfull \hbox (3.52148pt too wide) in paragraph at lines 26--36
+\tenrm pH af-fects dis-tri-bu-tion and se-cre-tion of cathep-sin B in ma-lig-na
+nt cells", Jour-nal="Cancer Res.", Year="1994",|
+
+\hbox(6.94444+1.94444)x469.75499, glue set - 1.0
+.\tenrm p
+.\tenrm H
+.\glue 3.33333 plus 1.66498 minus 1.11221
+.\tenrm a
+.\discretionary replacing 1
+..\tenrm f
+..\tenrm -
+.|\tenrm f
+.etc.
+
+)
+*
+! Emergency stop.
+<*> ...ects/Cancer/RobVersionReport/References.bib
+                                                  
+End of file on the terminal!
+
+!  ==> Fatal error occurred, no output PDF file produced!

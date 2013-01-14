@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{gate}
+R.A. Gatenby and E.T. Gawlinski.
+\newblock A reaction-diffusion model of cancer invasion.
+\newblock {\em Cancer Research}, 56(24):5745--5753, 1996.
+
+\bibitem{grif}
+J.~R. Griffiths.
+\newblock {{A}re cancer cells acidic?}
+\newblock {\em Br. J. Cancer}, 64(3):425--427, Sep 1991.
+
+\bibitem{Gull}
+P.~M. Gullino, F.~H. Grantham, A.~H. Courtney, and I.~Losonczy.
+\newblock {{R}elationship between oxygen and glucose consumption by
+  transplanted tumors in vivo}.
+\newblock {\em Cancer Res.}, 27(6):1041--1052, Jun 1967.
+
+\bibitem{patel}
+Aalpen~A. Patel, Edward~T. Gawlinski, Susan~K. Lemieux, and Robert~A. Gatenby.
+\newblock A cellular automaton model of early tumor growth and invasion: The
+  effects of native tissue vascularity and increased anaerobic tumor
+  metabolism.
+\newblock {\em Journal of Theoretical Biology}, 213(3):315 -- 331, 2001.
+
+\bibitem{roz}
+J.~Rozhin, M.~Sameni, G.~Ziegler, and B.~F. Sloane.
+\newblock {{P}ericellular p{H} affects distribution and secretion of cathepsin
+  {B} in malignant cells}.
+\newblock {\em Cancer Res.}, 54(24):6517--6525, Dec 1994.
+
+\bibitem{yama}
+H.~Yamasaki.
+\newblock {{A}berrant expression and function of gap junctions during
+  carcinogenesis}.
+\newblock {\em Environ. Health Perspect.}, 93:191--197, Jun 1991.
+
+\end{thebibliography}
