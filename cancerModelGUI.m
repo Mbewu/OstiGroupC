@@ -242,6 +242,10 @@ for k = 1:cancervariable.noofogenerations
     cancervariable.radiusOfGyration(k) = radiusOfGyration(cancervariable);
     axes(handles.tumorsize);
     plot(1:k,cancervariable.radiusOfGyration(1:k));
+    title(['Radius of Gyration at Generation ' num2str(cancervariable.currentgeneration)]);
+    xlabel('Generation no.');
+    ylabel('Radius of Gy (cm)');
+
         
 end
 

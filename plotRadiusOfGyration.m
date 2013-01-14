@@ -30,7 +30,7 @@ function [ ] = plotRadiusOfGyration( cancervariable,generationNo)
 
 plot(1:generationNo,cancervariable.radiusOfGyration(1:generationNo));
 title(['Radius of Gyration at Generation ' num2str(cancervariable.currentgeneration)]);
-xlabel('Generation no.')
+xlabel('Generation no.');
 ylabel('Radius of Gy (cm)');
 
 end

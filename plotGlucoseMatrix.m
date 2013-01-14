@@ -46,7 +46,7 @@ imagesc(cancervariable.glucosematrix);
      caxis([min(min(cancervariable.glucosematrix)) max]);
  end
 colorbar
-title(['Glucose Concentration at Generation ' num2str(cancervariable.currentgeneration)]);
+title(['Glucose Concentration(mM) at Generation ' num2str(cancervariable.currentgeneration)]);
 
 
 end
