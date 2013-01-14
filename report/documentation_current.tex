@@ -33,7 +33,7 @@
 
 \geometry{verbose,a4paper}
 
-% verschieden Symbole, Zeichen wie (c), ¤
+% verschieden Symbole, Zeichen wie (c), ï¿½
 \usepackage{textcomp}
 
 %\addtokomafont{caption}{\footnotesize}
@@ -42,8 +42,8 @@
 \usepackage{pdflscape}
 
 \usepackage{ %a4wide,
-            ellipsis, fixltx2e, mparhack,   %Fehlerkorrektur für Marginalien
-            booktabs, longtable             %schönere Tabellen
+            ellipsis, fixltx2e, mparhack,   %Fehlerkorrektur fï¿½r Marginalien
+            booktabs, longtable             %schï¿½nere Tabellen
 }  
 
 \usepackage[automark]{scrpage2}
@@ -67,7 +67,7 @@
 
 
 
-% schönerer Blocksatz!!
+% schï¿½nerer Blocksatz!!
 \usepackage{microtype}
 
 \usepackage{ifpdf} % part of the hyperref bundle
@@ -91,13 +91,13 @@
    \pagenumbering{arabic}}
 
 %Bezeichungen anpassen
-%Babelpaket muß zuvor geladen werden
+%Babelpaket muï¿½ zuvor geladen werden
 %\usepackage[ngerman]{babel}
 %\addto\captionsngerman{ 
 %\renewcommand{\figurename}{Abb.}% 
 %\renewcommand{\tablename}{Tab.}% 
 %\renewcommand{\abstractname}{Kurzfassung}
-%\renewcommand{\nomname}{Abkürzungen}
+%\renewcommand{\nomname}{Abkï¿½rzungen}
 %}
 
 % Alle Querverweise und URLs als Link darstellen
@@ -111,7 +111,7 @@
   pdfsubject={LyX-documentation about figures, tables, floats, notes, and boxes},
   pdfkeywords={LyX, Tables, Figures, Floats, Boxes, Notes}]{hyperref}
 
-%mehr Platz zwischen Überschrift und Tabelle
+%mehr Platz zwischen ï¿½berschrift und Tabelle
 \newcommand{\@ldtable}{}
 \let\@ldtable\table
 \renewcommand{\table}{ %
@@ -123,7 +123,7 @@
 %Aradi-style Schriftart
 %\usepackage{mathpazo}
 
-% Schriftgröße auf 13 stellen
+% Schriftgrï¿½ï¿½e auf 13 stellen
 %\usepackage{type1cm}
 %\renewcommand\normalsize{%
 %   \@setfontsize\normalsize{13pt}{14.5pt}%
@@ -175,12 +175,13 @@ in situ carcinoma and finally invasive cancer. As tumours are made
 up of rapidly dividing cells, they require high amounts of oxygen
 and glucose for survival and cell division. This rapidly overwhelms
 the ability of normal blood vessels to provide these nutrients and
-leads to angiogenesis within the tumours as well as the death of both
-normal cells as well as cells in the interior of the tumour. Also,
+leads to angiogenesis within the tumours. Also,
 as a consequence of hypoxia within the tumour, cells switch to using
 anaerobic respiration and release lactic acid into the extracellular
 environment. This causes a decrease in the pH in the environment within
-and around the tumour and also leads to necrosis. 
+and around the tumour and also leads to necrosis. While the initiation of this switch to anaerobic respiration is often said to be an adaptation to the hypoxic environment, some investigators have found that it occurs even with an adequate oxygen supply and is a phenotypic consequence{[}1{]}. 
+
+The resulting decrease in the environmental pH has deleterious effects on normal tissue as they have a much higher pH threshold for viability compared to tumour cells. Also, the decreased pH stimulates the production of enzymes which degrade the extracellular matrix and causes the loosening of gap junctions between cells. The degradation of extracellular matrix then allows the invasion of tumour cells into the host tissue. A discrete mathematical model involving all of these parameters as well as diffusion is thus useful for studying the interaction of tumour cells with its surrounding tissue as well as for the investigation of the changes within the microenvironment around the developing tumour. 
 
 Cellular automata has a long history of usage to model the growth
 and development of tumours. In this investigation by A.A. Patel et
@@ -191,9 +192,9 @@ for pre-angiogenic tumours. The model includes variables for glucose
 and lactic acid concentration. It however, does not include a variable
 for oxygen concentration as the author is focusing on the effects
 of acidification of the microenvironment rather than hypoxia. It was
-shown{[}1{]} that anaerobic respiration in tumour cells persists even
+shown{[}2{]} that anaerobic respiration in tumour cells persists even
 in high levels of oxygen and tumour cell viability is independent
-of oxygen levels{[}2{]}. 
+of oxygen levels{[}3{]}. 
 
 
 \chapter{Methods }
